@@ -41,7 +41,7 @@ export default function Home() {
 
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <h1 className="animate-fade-in-up mb-6 text-[clamp(3rem,8vw,6.5rem)] font-black leading-[1.05] tracking-tight">
-            Latent <br className="sm:hidden" />
+            Pluto AI <br className="sm:hidden" />
             <span className="bg-gradient-to-r from-white via-[#e8e8e8] to-[#00f5ff] bg-clip-text text-transparent">
               Space
             </span>
