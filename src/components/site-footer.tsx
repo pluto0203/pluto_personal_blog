@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
-import { GitHubIcon, LinkedInIcon, XIcon } from "@/components/social-icons";
+import { SocialLinks } from "@/components/social-links";
+import { FOOTER_LINKS } from "@/lib/site-content";
 
 export function SiteFooter() {
   return (
@@ -18,14 +19,9 @@ export function SiteFooter() {
         <div>
           <h4 className="mb-4 font-bold text-[#f0f0f0]">Quick Links</h4>
           <ul className="space-y-2 text-sm text-[#a0a0a0]">
-            {[
-              { label: "About the Author", href: "/about" },
-              { label: "Research Archive", href: "/archive" },
-              { label: "Latest Blog Posts", href: "/blog" },
-              { label: "GitHub Repository", href: "https://github.com/pluto0203/pluto_personal_blog" },
-            ].map((link) => (
+            {FOOTER_LINKS.map((link) => (
               <li key={link.label}>
-                {link.href.startsWith("http") ? (
+                {link.external ? (
                   <a href={link.href} target="_blank" rel="noreferrer" className="transition-colors hover:text-[#00f5ff]">
                     {link.label}
                   </a>
@@ -42,22 +38,7 @@ export function SiteFooter() {
         <div>
           <h4 className="mb-4 font-bold text-[#f0f0f0]">Connect</h4>
           <div className="mb-4 flex gap-3">
-            {[
-              { icon: GitHubIcon, label: "GitHub", href: "https://github.com/pluto0203" },
-              { icon: XIcon, label: "X / Twitter", href: "https://twitter.com" },
-              { icon: LinkedInIcon, label: "LinkedIn", href: "https://linkedin.com" },
-            ].map(({ icon: Icon, label, href }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={label}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#222222] bg-[#111111] text-[#a0a0a0] transition-all hover:border-[#00f5ff]/50 hover:text-[#00f5ff] hover:shadow-[0_0_15px_rgba(0,245,255,0.15)]"
-              >
-                <Icon className="h-5 w-5" />
-              </a>
-            ))}
+            <SocialLinks />
           </div>
           <p className="font-[family-name:var(--font-jetbrains-mono)] text-xs text-[#606060]">Weekly posts on AI research and engineering</p>
         </div>

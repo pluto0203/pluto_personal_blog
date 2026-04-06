@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { getAllCategories } from "@/lib/content";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -23,11 +24,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const categories = getAllCategories();
+
   return (
     <html lang="en">
       <body className="bg-[#0a0a0a] text-[#f0f0f0] antialiased">
         <div className="min-h-screen bg-[#0a0a0a] text-[#f0f0f0]">
-          <SiteHeader />
+          <SiteHeader categories={categories} />
           <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6">{children}</main>
           <SiteFooter />
         </div>

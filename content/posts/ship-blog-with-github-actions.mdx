@@ -1,0 +1,32 @@
+---
+title: "Ship a personal blog with GitHub Actions and no server"
+description: "Cách thiết lập pipeline build và deploy cho website cá nhân để mỗi lần push là site tự cập nhật."
+excerpt: "Static export + GitHub Pages là một lựa chọn rất gọn, cực phù hợp cho personal blog thiên về nội dung và credibility online."
+date: "2026-03-18"
+tags:
+  - "CI/CD"
+  - "GitHub"
+category: "CI/CD"
+seed: 4
+featured: false
+seriesSlug: "engineering-playbook"
+---
+
+## Keep the deployment path simple
+
+Nếu site chưa cần backend, static export là lựa chọn hợp lý: nhanh, dễ cache, ít chi phí vận hành và cực kỳ hợp với GitHub Pages.
+
+## Build a real quality gate
+
+Workflow tối thiểu nên có checkout, setup node, install, lint, type-check, build và deploy. Làm đúng từ đầu giúp side project cá nhân trông chuyên nghiệp hơn rất nhiều.
+
+```yaml
+- run: npm ci
+- run: npm run lint
+- run: npm run typecheck
+- run: npm run build
+```
+
+## Then focus on writing
+
+Sau khi pipeline ổn định, phần quan trọng nhất là duy trì thói quen viết và biến blog thành nơi lưu lại những insight thật từ quá trình học và build.

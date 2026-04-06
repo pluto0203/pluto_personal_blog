@@ -6,16 +6,8 @@ import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, Search, SunMoon, X } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { GitHubIcon, XIcon } from "@/components/social-icons";
-import { getAllCategories, slugifyTaxonomy } from "@/lib/blog-data";
-
-const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Blog", href: "/blog" },
-  { label: "About", href: "/about" },
-  { label: "Archive", href: "/archive" },
-];
-
-const CATEGORIES = getAllCategories();
+import { slugifyTaxonomy } from "@/lib/blog-shared";
+import { NAV_LINKS, SOCIAL_LINKS } from "@/lib/site-content";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") {
@@ -25,10 +17,16 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function SiteHeader() {
+type SiteHeaderProps = {
+  categories: string[];
+};
+
+export function SiteHeader({ categories }: SiteHeaderProps) {
   const pathname = usePathname();
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const githubLink = SOCIAL_LINKS.find((link) => link.platform === "github")?.href ?? "https://github.com";
+  const xLink = SOCIAL_LINKS.find((link) => link.platform === "x")?.href ?? "https://twitter.com";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-black/80 backdrop-blur-md">
@@ -67,7 +65,7 @@ export function SiteHeader() {
                 className="absolute left-0 top-8 w-48 rounded-sm border border-[#222222] bg-[#111111] py-2 shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
                 onMouseLeave={() => setCategoriesOpen(false)}
               >
-                {CATEGORIES.map((category) => {
+                {categories.map((category) => {
                   const slug = slugifyTaxonomy(category);
                   return (
                     <Link key={category} href={`/category/${slug}`}>
@@ -89,10 +87,10 @@ export function SiteHeader() {
           <button className="transition-colors hover:text-[#00f5ff]" aria-label="Search">
             <Search className="h-5 w-5" />
           </button>
-          <a href="https://github.com/pluto0203" target="_blank" rel="noreferrer" className="hidden transition-colors hover:text-[#00f5ff] sm:block" aria-label="GitHub">
+          <a href={githubLink} target="_blank" rel="noreferrer" className="hidden transition-colors hover:text-[#00f5ff] sm:block" aria-label="GitHub">
             <GitHubIcon className="h-5 w-5" />
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hidden transition-colors hover:text-[#00f5ff] sm:block" aria-label="Twitter">
+          <a href={xLink} target="_blank" rel="noreferrer" className="hidden transition-colors hover:text-[#00f5ff] sm:block" aria-label="Twitter">
             <XIcon className="h-5 w-5" />
           </a>
           <button className="transition-colors hover:text-[#00f5ff]" aria-label="Toggle theme">
@@ -124,7 +122,7 @@ export function SiteHeader() {
               Categories
             </p>
             <div className="flex flex-wrap gap-2">
-              {CATEGORIES.map((category) => {
+              {categories.map((category) => {
                 const slug = slugifyTaxonomy(category);
                 return (
                   <Link key={category} href={`/category/${slug}`}>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { AbstractImage } from "@/components/abstract-image";
-import type { Post } from "@/lib/blog-data";
+import { author, type Post } from "@/lib/blog-data";
 
 export function PostCard({ post }: { post: Post }) {
   return (
@@ -23,7 +23,7 @@ export function PostCard({ post }: { post: Post }) {
             <div className="flex shrink-0 items-center gap-2">
               <span className="font-[family-name:var(--font-jetbrains-mono)] text-xs text-[#00f5ff]">{post.readTime}</span>
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#333] bg-[#1a1a1a] text-[10px] font-bold text-[#00f5ff]">
-                PT
+                {author.initials}
               </div>
             </div>
           </div>

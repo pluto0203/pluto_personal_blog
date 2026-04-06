@@ -1,0 +1,36 @@
+---
+title: "Prompt Engineering Patterns for Production Systems"
+description: "Các pattern prompt gọn, ổn định và dễ maintain khi bạn cần đưa LLM vào flow của sản phẩm thật."
+excerpt: "Tập trung vào prompt templates, delimiters, structured output và cách giảm tính mong manh khi scale lên production."
+date: "2026-04-02"
+tags:
+  - "Prompting"
+  - "Tools"
+category: "Prompting"
+seed: 1
+featured: true
+seriesSlug: "engineering-playbook"
+---
+
+## Set the contract first
+
+Một prompt production-grade nên bắt đầu từ contract rõ ràng: input là gì, output format ra sao, tiêu chí fail là gì. Nếu contract mơ hồ thì kết quả cũng sẽ mơ hồ.
+
+Structured output, examples ngắn và delimiter nhất quán luôn có giá trị hơn prompt dài nhưng không có tổ chức.
+
+## Use layered instructions
+
+Chia prompt thành system intent, task instructions, context, constraints và output schema giúp bạn debug dễ hơn nhiều khi chất lượng bắt đầu lệch.
+
+Layering cũng giúp tái sử dụng tốt khi cùng một model phục vụ nhiều luồng tác vụ khác nhau.
+
+```text
+SYSTEM: You are a precise technical editor.
+TASK: Summarize the note in 3 bullets.
+CONSTRAINTS: Keep terminology accurate, no hype.
+OUTPUT: JSON with title, bullets, risk.
+```
+
+## Evaluate before scaling
+
+Đừng rollout chỉ vì vài ví dụ đầu trông đẹp. Hãy tạo tập test nhỏ với edge cases và đo consistency trước khi nghĩ đến việc thêm model hoặc tool phức tạp hơn.

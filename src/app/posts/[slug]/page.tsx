@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CodeBlock } from "@/components/code-block";
+import remarkGfm from "remark-gfm";
+import { mdxComponents } from "@/components/mdx-components";
 import { PostCard } from "@/components/post-card";
 import { ReadingProgress } from "@/components/reading-progress";
 import { ShareActions } from "@/components/share-actions";
 import { author, getAllPosts, getPostBySlug } from "@/lib/blog-data";
+import { getPostHeadings } from "@/lib/content";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -37,7 +40,7 @@ export default async function PostDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const tocItems = post.body.map((section) => section.title);
+  const tocItems = getPostHeadings(post.content);
   const relatedPosts = getAllPosts().filter((item) => item.slug !== post.slug).slice(0, 3);
 
   return (
@@ -113,13 +116,15 @@ export default async function PostDetailPage({ params }: PageProps) {
               Contents
             </h4>
             <ul className="space-y-3 text-sm">
-              {tocItems.map((item, index) => (
-                <li key={item}>
+              {tocItems.map((item) => (
+                <li key={item.id}>
                   <a
-                    href={`#section-${index + 1}`}
-                    className="block border-l-2 border-transparent py-0.5 pl-3 text-[13px] text-[#606060] transition-all hover:border-[#333] hover:text-[#a0a0a0]"
+                    href={`#${item.id}`}
+                    className={`block border-l-2 border-transparent py-0.5 text-[13px] text-[#606060] transition-all hover:border-[#333] hover:text-[#a0a0a0] ${
+                      item.level === 3 ? "pl-6" : "pl-3"
+                    }`}
                   >
-                    {item}
+                    {item.text}
                   </a>
                 </li>
               ))}
@@ -128,36 +133,19 @@ export default async function PostDetailPage({ params }: PageProps) {
         </aside>
 
         <article className="max-w-[720px] min-w-0 flex-1">
-          <p className="mb-8 text-lg leading-relaxed text-[#b0b0b0]">
-            {post.excerpt}
-          </p>
+          <p className="mb-8 text-lg leading-relaxed text-[#b0b0b0]">{post.excerpt}</p>
 
-          {post.body.map((section, index) => (
-            <section key={section.title} id={`section-${index + 1}`} className="scroll-mt-24">
-              <h2 className="mb-5 mt-12 border-l-4 border-[#00f5ff] pl-4 text-2xl font-black text-white">{section.title}</h2>
-              {section.paragraphs.map((paragraph) => (
-                <p key={`${section.title}-${paragraph}`} className="mb-5 leading-relaxed text-[#d0d0d0]">
-                  {paragraph}
-                </p>
-              ))}
-              {section.code ? <CodeBlock code={section.code} language={section.language ?? "text"} /> : null}
-              {section.note ? (
-                <div className="my-8 flex items-start gap-4 rounded-sm border border-[#00f5ff]/20 bg-[#00f5ff]/[0.04] p-5">
-                  <div className="mt-0.5 shrink-0 text-[#00f5ff]">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="10" />
-                      <line x1="12" y1="16" x2="12" y2="12" />
-                      <line x1="12" y1="8" x2="12.01" y2="8" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="mb-1 text-sm font-bold text-[#00f5ff]">Key takeaway</h4>
-                    <p className="text-sm leading-relaxed text-[#a0a0a0]">{section.note}</p>
-                  </div>
-                </div>
-              ) : null}
-            </section>
-          ))}
+          <div className="min-w-0">
+            <MDXRemote
+              source={post.content}
+              components={mdxComponents}
+              options={{
+                mdxOptions: {
+                  remarkPlugins: [remarkGfm],
+                },
+              }}
+            />
+          </div>
         </article>
 
         <aside className="hidden w-48 shrink-0 xl:block">

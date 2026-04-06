@@ -1,0 +1,31 @@
+---
+title: "From a RAG note to a mini demo in one weekend"
+description: "Một cách tiếp cận gọn để biến ghi chú về RAG thành demo nhỏ nhưng trình bày được và học được nhiều thứ thật."
+excerpt: "Scope nhỏ, evaluation thủ công, UX rõ ràng — đó là công thức tốt hơn hẳn việc lao vào một pipeline quá lớn ngay từ đầu."
+date: "2026-03-28"
+tags:
+  - "Tools"
+  - "RAG"
+category: "Tools"
+seed: 2
+featured: true
+seriesSlug: "ai-building-blocks"
+---
+
+## Choose a tiny problem
+
+Một demo RAG tốt không cần dữ liệu lớn. Chỉ cần một corpus nhỏ nhưng có cấu trúc và vài câu hỏi thực tế là đủ để bạn học được retrieval, chunking và evaluation.
+
+## Measure manually first
+
+Trước khi thêm reranker hay tối ưu prompt, hãy tự kiểm tra top-k results bằng tay. Đây là cách nhanh nhất để biết retrieval có đang thực sự trả đúng ngữ cảnh hay không.
+
+```python
+queries = ['What is RAG?', 'When do we need reranking?', 'How should chunk size be chosen?']
+for query in queries:
+    print(retrieve(query))
+```
+
+## Polish the first 30 seconds of UX
+
+Nếu người khác có thể thử demo của bạn trong 30 giây đầu và hiểu ngay nó làm gì, project đó sẽ có giá trị hơn rất nhiều so với một pipeline phức tạp nhưng khó chạm vào.

@@ -1,0 +1,25 @@
+---
+title: "Evaluating LLM apps without fooling yourself"
+description: "Một checklist gọn để đánh giá ứng dụng LLM theo cách bớt cảm tính và hữu ích hơn cho quyết định sản phẩm."
+excerpt: "Đừng chỉ nhìn demo đẹp. Hãy đo consistency, failure modes, cost, latency và khả năng giải thích kết quả khi có edge cases."
+date: "2026-03-10"
+tags:
+  - "Research"
+  - "AI"
+category: "Research"
+seed: 5
+featured: false
+seriesSlug: "ai-building-blocks"
+---
+
+## Define success before testing
+
+Nếu bạn không định nghĩa success criteria trước, bài đánh giá sẽ rất dễ bị dẫn dắt bởi demo đẹp hoặc vài output trông thuyết phục ban đầu.
+
+## Test failure modes intentionally
+
+Hãy cố tình đưa vào prompt mơ hồ, dữ liệu thiếu hoặc câu hỏi gây nhiễu. Những tình huống này mới cho thấy ứng dụng có thực sự robust hay chưa.
+
+## Track cost and latency
+
+Một system trả lời đúng nhưng quá chậm hoặc quá đắt vẫn là một system khó vận hành. Evaluation tốt luôn gắn với ràng buộc thực tế của sản phẩm.

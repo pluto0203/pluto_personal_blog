@@ -1,0 +1,51 @@
+---
+title: "Understanding Attention Mechanisms in Transformers"
+description: "A deep dive into the intuition and the math that makes self-attention work so well in modern language models."
+excerpt: "Từ intuition đến công thức scaled dot-product attention, bài này giúp bạn nối research concept với cách LLM thực sự xử lý ngữ cảnh."
+date: "2026-04-05"
+tags:
+  - "LLMs"
+  - "Research"
+category: "LLMs"
+seed: 0
+featured: true
+seriesSlug: "ai-building-blocks"
+---
+
+## Introduction
+
+Before transformers, sequence models relied on recurrent architectures that struggled with long-range dependencies and parallelization. Attention changed that trade-off completely.
+
+Khi bạn hiểu attention như một cơ chế phân bổ mức độ tập trung theo ngữ cảnh, các khái niệm như prompt engineering, RAG hay context window sẽ trở nên trực quan hơn rất nhiều.
+
+## The Attention Formula
+
+Ở lõi của transformer là scaled dot-product attention: một phép tính đơn giản nhưng cực kỳ mạnh, nơi mỗi token tính trọng số lên các token khác dựa trên query, key và value.
+
+Việc chia cho căn bậc hai của dimension giúp giữ cho softmax không bị đẩy vào vùng gradient quá nhỏ khi vector có độ lớn cao.
+
+```python
+import torch
+import math
+
+def scaled_dot_product_attention(q, k, v):
+    d_k = q.size(-1)
+    scores = torch.matmul(q, k.transpose(-2, -1)) / math.sqrt(d_k)
+    weights = torch.softmax(scores, dim=-1)
+    return torch.matmul(weights, v), weights
+```
+
+## Multi-Head Attention
+
+Thay vì một góc nhìn duy nhất, multi-head attention cho phép model học nhiều quan hệ khác nhau trong cùng một câu: cú pháp, ngữ nghĩa, thực thể hoặc dependencies xa nhau.
+
+Đây là lý do transformer vừa expressive vừa phù hợp với hạ tầng GPU hiện đại.
+
+## Practical Implications
+
+Hiểu attention không chỉ để đọc paper. Nó giúp bạn viết prompt tốt hơn, đánh giá context saturation và đưa ra quyết định thực tế khi xây hệ thống dựa trên LLM.
+
+Các kỹ thuật như Flash Attention hay sparse attention đều là nỗ lực tối ưu cùng một nguyên lý cốt lõi này.
+
+> **Key takeaway**  
+> Prompt engineering hiệu quả thường là cách bạn sắp xếp lại attention landscape của model, chứ không chỉ là “viết prompt hay”.

@@ -43,7 +43,15 @@ Main pages currently available:
 - `/series` — grouped reading paths
 - `/about` — author / blog info
 
-Sample content currently lives in `src/lib/blog-data.ts`.
+Blog content now lives in `content/posts/*.mdx`.
+
+### Add a new post
+
+1. Copy `content/posts/_template.mdx`
+2. Rename it to your slug, for example `my-first-rag-note.mdx`
+3. Fill in the frontmatter and article body
+4. Set `draft: false`
+5. Commit and push to `main` → GitHub Actions will rebuild and deploy the site
 
 ## GitHub Pages CI/CD setup
 
