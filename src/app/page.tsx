@@ -1,103 +1,116 @@
-import Image from "next/image";
+import Link from "next/link";
+import { PostCard } from "@/components/post-card";
+import { SeriesCard } from "@/components/series-card";
+import { getAllTags, getFeaturedPosts, getLatestPosts, series, siteConfig } from "@/lib/blog-data";
+
+const stats = [
+  { label: "Featured posts", value: "03" },
+  { label: "Series đang viết", value: "02" },
+  { label: "Chủ đề", value: String(getAllTags().length).padStart(2, "0") },
+];
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const featuredPosts = getFeaturedPosts();
+  const latestPosts = getLatestPosts(3);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className="space-y-10">
+      <section className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="rounded-[32px] border border-white/10 bg-linear-to-br from-slate-900 via-slate-950 to-slate-900 p-6 sm:p-8">
+          <p className="text-sm font-medium uppercase tracking-[0.24em] text-cyan-200">Modern tech / AI blog</p>
+          <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+            {siteConfig.name}: nơi lưu lại những ghi chú về engineering, AI và cách ship sản phẩm gọn gàng.
+          </h1>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
+            {siteConfig.description}
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              href="/posts"
+              className="rounded-full bg-cyan-400 px-4 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+            >
+              Đọc bài mới nhất
+            </Link>
+            <Link
+              href="/series"
+              className="rounded-full border border-white/10 px-4 py-2.5 text-sm font-semibold text-slate-100 transition hover:bg-white/5"
+            >
+              Xem các series
+            </Link>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+          {stats.map((item) => (
+            <div key={item.label} className="rounded-[28px] border border-white/10 bg-white/5 p-5">
+              <p className="text-sm text-slate-400">{item.label}</p>
+              <p className="mt-3 text-3xl font-semibold text-white">{item.value}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="grid gap-4 lg:grid-cols-[1fr_320px]">
+        <div className="rounded-[28px] border border-cyan-400/20 bg-cyan-400/8 p-6">
+          <p className="text-sm uppercase tracking-[0.24em] text-cyan-200">Focus</p>
+          <h2 className="mt-2 text-2xl font-semibold text-white">Viết ngắn gọn, thực chiến và dễ áp dụng.</h2>
+          <p className="mt-3 text-sm leading-6 text-slate-300">
+            Blog này ưu tiên các bài về AI workflow, CI/CD, side project engineering và những insight có thể chuyển thành demo nhanh.
+          </p>
+        </div>
+        <div className="rounded-[28px] border border-white/10 bg-white/5 p-6">
+          <p className="text-sm uppercase tracking-[0.24em] text-slate-400">Topics</p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {getAllTags().map((tag) => (
+              <span key={tag} className="rounded-full bg-white/5 px-3 py-1 text-sm text-slate-200">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="space-y-4">
+        <div className="flex items-end justify-between gap-3">
+          <div>
+            <p className="text-sm uppercase tracking-[0.24em] text-slate-400">Featured</p>
+            <h2 className="mt-2 text-2xl font-semibold text-white">Bài nổi bật</h2>
+          </div>
+          <Link href="/posts" className="text-sm text-cyan-200 hover:text-cyan-100">
+            Xem tất cả →
+          </Link>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {featuredPosts.map((post) => (
+            <PostCard key={post.slug} post={post} />
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-4">
+        <div>
+          <p className="text-sm uppercase tracking-[0.24em] text-slate-400">Series</p>
+          <h2 className="mt-2 text-2xl font-semibold text-white">Đọc theo lộ trình</h2>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {series.map((item) => (
+            <SeriesCard key={item.slug} item={item} />
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-4">
+        <div>
+          <p className="text-sm uppercase tracking-[0.24em] text-slate-400">Latest notes</p>
+          <h2 className="mt-2 text-2xl font-semibold text-white">Mới cập nhật</h2>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {latestPosts.map((post) => (
+            <PostCard key={post.slug} post={post} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
