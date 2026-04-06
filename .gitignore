@@ -16,9 +16,12 @@
 # next.js
 /.next/
 /out/
+/build.log
 
 # production
 /build
+/neural-notes/dist/
+/neural-notes/node_modules/
 
 # misc
 .DS_Store

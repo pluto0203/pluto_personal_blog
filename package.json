@@ -8,7 +8,9 @@
     "start": "npx serve@latest out",
     "preview": "npx serve@latest out",
     "lint": "eslint . --max-warnings=0 --ignore-pattern .next --ignore-pattern out",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "check": "npm run lint && npm run typecheck && npm run build",
+    "clean": "node -e \"const fs=require('fs'); ['.next','out'].forEach((p)=>fs.rmSync(p,{recursive:true,force:true}))\""
   },
   "dependencies": {
     "next": "15.3.3",

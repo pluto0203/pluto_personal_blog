@@ -36,22 +36,24 @@ export default async function SeriesDetailPage({ params }: PageProps) {
   const posts = getPostsBySeries(item.slug);
 
   return (
-    <div className="space-y-8">
-      <section className="rounded-[28px] border border-white/10 bg-linear-to-br from-slate-900 via-slate-950 to-slate-900 p-6 sm:p-8">
-        <div className="mb-3 flex flex-wrap gap-2 text-xs">
-          <span className="rounded-full bg-violet-500/15 px-2.5 py-1 text-violet-200">{item.level}</span>
-          <span className="rounded-full bg-white/5 px-2.5 py-1 text-slate-300">{item.cadence}</span>
+    <div className="space-y-8 py-4 sm:py-6">
+      <section className="rounded-sm border border-[#222222] bg-[#111111] p-6 sm:p-8">
+        <div className="mb-3 flex flex-wrap gap-2 text-[10px] uppercase tracking-wider">
+          <span className="rounded-full border border-[#39ff14]/30 bg-[#39ff14]/5 px-2.5 py-1 font-bold text-[#39ff14]">{item.level}</span>
+          <span className="rounded-full border border-[#222222] bg-[#0a0a0a] px-2.5 py-1 text-[#a0a0a0]">{item.cadence}</span>
         </div>
-        <h1 className="text-3xl font-semibold text-white sm:text-4xl">{item.title}</h1>
-        <p className="mt-4 max-w-3xl text-base leading-7 text-slate-300">{item.description}</p>
+        <h1 className="text-3xl font-black tracking-tight text-white sm:text-4xl">{item.title}</h1>
+        <p className="mt-4 max-w-3xl leading-7 text-[#a0a0a0]">{item.description}</p>
       </section>
 
       <section className="space-y-4">
         <div>
-          <p className="text-sm uppercase tracking-[0.24em] text-slate-400">Posts in this series</p>
-          <h2 className="mt-2 text-2xl font-semibold text-white">Lộ trình đọc</h2>
+          <p className="font-[family-name:var(--font-jetbrains-mono)] text-sm uppercase tracking-[0.24em] text-[#606060]">
+            Posts in this series
+          </p>
+          <h2 className="mt-2 text-2xl font-bold text-white">Reading path</h2>
         </div>
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}

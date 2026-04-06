@@ -4,21 +4,23 @@ import { series } from "@/lib/blog-data";
 
 export const metadata: Metadata = {
   title: "Series",
-  description: "Danh sách các series bài viết về AI và engineering trên Pluto Notes.",
+  description: "Reading paths grouped by AI and engineering themes.",
 };
 
 export default function SeriesPage() {
   return (
-    <div className="space-y-8">
-      <section className="rounded-[28px] border border-white/10 bg-linear-to-br from-slate-900 via-slate-950 to-slate-900 p-6 sm:p-8">
-        <p className="text-sm font-medium uppercase tracking-[0.24em] text-violet-200">Series</p>
-        <h1 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">Nhóm bài viết theo hành trình học và build.</h1>
-        <p className="mt-4 max-w-3xl text-base leading-7 text-slate-300">
-          Mỗi series tập trung vào một trục kỹ năng rõ ràng để bạn có thể đọc theo flow thay vì xem từng bài rời rạc.
+    <div className="py-4 sm:py-6">
+      <div className="mb-12">
+        <div className="mb-4 flex items-center gap-3">
+          <div className="h-8 w-1 bg-[#00f5ff]" />
+          <h1 className="text-3xl font-black tracking-tight text-[#f0f0f0]">Series</h1>
+        </div>
+        <p className="max-w-3xl font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#606060]">
+          Structured reading paths for AI, LLM workflows and practical engineering notes.
         </p>
-      </section>
+      </div>
 
-      <section className="grid gap-4 md:grid-cols-2">
+      <section className="grid gap-6 md:grid-cols-2">
         {series.map((item) => (
           <SeriesCard key={item.slug} item={item} />
         ))}

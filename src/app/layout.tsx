@@ -1,31 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL("https://pluto0203.github.io/pluto_personal_blog/"),
   title: {
-    default: "Pluto Notes",
-    template: "%s | Pluto Notes",
+    default: "Neural Notes",
+    template: "%s | Neural Notes",
   },
-  description:
-    "Blog cá nhân về IT, AI, CI/CD và những ghi chú thực chiến khi build side project.",
+  description: "A modern tech/AI blog covering LLMs, engineering workflows and practical research notes.",
   openGraph: {
-    title: "Pluto Notes",
-    description: "Modern tech/AI blog built with Next.js and deployed by GitHub Actions.",
-    siteName: "Pluto Notes",
+    title: "Neural Notes",
+    description: "Exploring AI systems, software engineering, and the architecture of machine cognition.",
+    siteName: "Neural Notes",
     type: "website",
   },
 };
@@ -36,11 +24,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.12),_transparent_0,_transparent_45%),radial-gradient(circle_at_right,_rgba(168,85,247,0.12),_transparent_0,_transparent_35%),linear-gradient(180deg,_#020617_0%,_#020617_100%)] text-slate-100">
+    <html lang="en">
+      <body className="bg-[#0a0a0a] text-[#f0f0f0] antialiased">
+        <div className="min-h-screen bg-[#0a0a0a] text-[#f0f0f0]">
           <SiteHeader />
-          <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">{children}</main>
+          <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6">{children}</main>
           <SiteFooter />
         </div>
       </body>

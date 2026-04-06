@@ -1,115 +1,166 @@
 import Link from "next/link";
 import { PostCard } from "@/components/post-card";
-import { SeriesCard } from "@/components/series-card";
-import { getAllTags, getFeaturedPosts, getLatestPosts, series, siteConfig } from "@/lib/blog-data";
+import { getAllCategories, getAllPosts, getFeaturedPosts, siteConfig, slugifyTaxonomy } from "@/lib/blog-data";
 
-const stats = [
-  { label: "Featured posts", value: "03" },
-  { label: "Series đang viết", value: "02" },
-  { label: "Chủ đề", value: String(getAllTags().length).padStart(2, "0") },
+const trendingTitles = [
+  "Why RLHF is the new fine-tuning",
+  "Deploying VLLMs on consumer hardware",
+  "The mathematics of vector embeddings",
+];
+
+const featuredPapers = [
+  { title: "Attention Is All You Need", arxiv: "1706.03762", date: "Jun 2017" },
+  { title: "Language Models are Few-Shot Learners", arxiv: "2005.14165", date: "May 2020" },
 ];
 
 export default function Home() {
   const featuredPosts = getFeaturedPosts();
-  const latestPosts = getLatestPosts(3);
+  const latestPosts = getAllPosts().slice(0, 6);
 
   return (
-    <div className="space-y-10">
-      <section className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="rounded-[32px] border border-white/10 bg-linear-to-br from-slate-900 via-slate-950 to-slate-900 p-6 sm:p-8">
-          <p className="text-sm font-medium uppercase tracking-[0.24em] text-cyan-200">Modern tech / AI blog</p>
-          <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-            {siteConfig.name}: nơi lưu lại những ghi chú về engineering, AI và cách ship sản phẩm gọn gàng.
-          </h1>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
-            {siteConfig.description}
-          </p>
+    <div className="text-[#f0f0f0]">
+      <section className="relative overflow-hidden border-b border-[#222222] pb-24 pt-20">
+        <div className="pointer-events-none absolute inset-0">
+          <svg className="h-full w-full opacity-[0.035]" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#00f5ff" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#hero-grid)" />
+            <circle cx="256" cy="180" r="4" fill="#00f5ff" style={{ animation: "pulse-node 4s ease-in-out infinite" }} />
+            <circle cx="1024" cy="280" r="4" fill="#39ff14" style={{ animation: "pulse-node 5s ease-in-out infinite 1s" }} />
+            <circle cx="768" cy="112" r="4" fill="#c026d3" style={{ animation: "pulse-node 3s ease-in-out infinite 2s" }} />
+            <circle cx="448" cy="368" r="3" fill="#00f5ff" style={{ animation: "pulse-node 6s ease-in-out infinite 0.5s" }} />
+            <path d="M 256 180 L 768 112" stroke="#00f5ff" strokeWidth="1" strokeDasharray="5 5" opacity="0.6" style={{ animation: "flow-line 18s linear infinite" }} />
+            <path d="M 1024 280 L 768 112" stroke="#c026d3" strokeWidth="1" strokeDasharray="5 5" opacity="0.6" style={{ animation: "flow-line 14s linear infinite reverse" }} />
+            <path d="M 448 368 L 1024 280" stroke="#39ff14" strokeWidth="1" strokeDasharray="5 5" opacity="0.5" style={{ animation: "flow-line 22s linear infinite 3s" }} />
+          </svg>
+          <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 50% 60%, rgba(0,245,255,0.04) 0%, transparent 60%)" }} />
+        </div>
 
-          <div className="mt-6 flex flex-wrap gap-3">
+        <div className="relative z-10 mx-auto max-w-4xl text-center">
+          <h1 className="animate-fade-in-up mb-6 text-[clamp(3rem,8vw,6.5rem)] font-black leading-[1.05] tracking-tight">
+            Decoding <br className="sm:hidden" />
+            <span className="bg-gradient-to-r from-white via-[#e8e8e8] to-[#00f5ff] bg-clip-text text-transparent">
+              Intelligence
+            </span>
+          </h1>
+          <p className="animate-fade-in-up-delay-1 mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-[#a0a0a0] sm:text-xl">
+            {siteConfig.headline}
+          </p>
+          <div className="animate-fade-in-up-delay-2 mb-14 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
-              href="/posts"
-              className="rounded-full bg-cyan-400 px-4 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+              href="/blog"
+              className="w-full rounded-sm bg-[#00f5ff] px-8 py-4 text-center font-bold text-[#0a0a0a] transition-all duration-300 hover:bg-white hover:shadow-[0_0_24px_rgba(0,245,255,0.45)] sm:w-auto"
             >
-              Đọc bài mới nhất
+              Read Latest
             </Link>
             <Link
-              href="/series"
-              className="rounded-full border border-white/10 px-4 py-2.5 text-sm font-semibold text-slate-100 transition hover:bg-white/5"
+              href="/archive"
+              className="w-full rounded-sm border border-[#00f5ff]/50 bg-transparent px-8 py-4 text-center font-bold text-[#00f5ff] transition-all duration-300 hover:border-[#00f5ff] hover:bg-[#00f5ff]/10 sm:w-auto"
             >
-              Xem các series
+              Explore Topics
             </Link>
+          </div>
+          <div className="animate-fade-in-up-delay-3 flex items-center justify-center gap-2 font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#606060]">
+            <span className="h-2 w-2 rounded-full bg-[#39ff14] animate-pulse" />
+            {latestPosts.length} articles · {getAllCategories().length} categories · practical notes updated weekly
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-          {stats.map((item) => (
-            <div key={item.label} className="rounded-[28px] border border-white/10 bg-white/5 p-5">
-              <p className="text-sm text-slate-400">{item.label}</p>
-              <p className="mt-3 text-3xl font-semibold text-white">{item.value}</p>
-            </div>
-          ))}
-        </div>
+        <div className="pointer-events-none absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-[#0a0a0a] to-transparent" />
       </section>
 
-      <section className="grid gap-4 lg:grid-cols-[1fr_320px]">
-        <div className="rounded-[28px] border border-cyan-400/20 bg-cyan-400/8 p-6">
-          <p className="text-sm uppercase tracking-[0.24em] text-cyan-200">Focus</p>
-          <h2 className="mt-2 text-2xl font-semibold text-white">Viết ngắn gọn, thực chiến và dễ áp dụng.</h2>
-          <p className="mt-3 text-sm leading-6 text-slate-300">
-            Blog này ưu tiên các bài về AI workflow, CI/CD, side project engineering và những insight có thể chuyển thành demo nhanh.
-          </p>
-        </div>
-        <div className="rounded-[28px] border border-white/10 bg-white/5 p-6">
-          <p className="text-sm uppercase tracking-[0.24em] text-slate-400">Topics</p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {getAllTags().map((tag) => (
-              <span key={tag} className="rounded-full bg-white/5 px-3 py-1 text-sm text-slate-200">
-                {tag}
+      <section className="mx-auto flex max-w-7xl flex-col gap-12 py-16 lg:flex-row">
+        <div className="lg:w-3/4">
+          <div className="mb-8 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <h2 className="text-2xl font-bold tracking-tight">Latest Posts</h2>
+              <div className="h-[2px] w-16 bg-[#00f5ff]" />
+            </div>
+            <Link href="/blog">
+              <span className="cursor-pointer text-sm font-medium text-[#00f5ff] underline-offset-4 decoration-[#00f5ff]/50 hover:underline">
+                View All
               </span>
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {featuredPosts.map((post) => (
+              <PostCard key={post.slug} post={post} />
             ))}
           </div>
         </div>
-      </section>
 
-      <section className="space-y-4">
-        <div className="flex items-end justify-between gap-3">
+        <aside className="space-y-10 lg:w-1/4">
           <div>
-            <p className="text-sm uppercase tracking-[0.24em] text-slate-400">Featured</p>
-            <h2 className="mt-2 text-2xl font-semibold text-white">Bài nổi bật</h2>
+            <h3 className="mb-5 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#f0f0f0]">
+              <span className="h-2 w-2 shrink-0 bg-[#c026d3]" />
+              Trending This Week
+            </h3>
+            <ul className="space-y-4">
+              {trendingTitles.map((title, index) => (
+                <li key={title} className="group flex cursor-pointer gap-4">
+                  <span className="mt-[-2px] shrink-0 font-[family-name:var(--font-jetbrains-mono)] text-base font-bold text-[#00f5ff]">
+                    0{index + 1}
+                  </span>
+                  <span className="text-sm leading-snug text-[#a0a0a0] transition-colors group-hover:text-white">{title}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <Link href="/posts" className="text-sm text-cyan-200 hover:text-cyan-100">
-            Xem tất cả →
-          </Link>
-        </div>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {featuredPosts.map((post) => (
-            <PostCard key={post.slug} post={post} />
-          ))}
-        </div>
-      </section>
 
-      <section className="space-y-4">
-        <div>
-          <p className="text-sm uppercase tracking-[0.24em] text-slate-400">Series</p>
-          <h2 className="mt-2 text-2xl font-semibold text-white">Đọc theo lộ trình</h2>
-        </div>
-        <div className="grid gap-4 md:grid-cols-2">
-          {series.map((item) => (
-            <SeriesCard key={item.slug} item={item} />
-          ))}
-        </div>
-      </section>
+          <div className="relative overflow-hidden rounded-sm border border-[#222222] bg-[#111111] p-5">
+            <div className="absolute left-0 top-0 h-[2px] w-full bg-gradient-to-r from-[#00f5ff] to-[#c026d3]" />
+            <h3 className="mb-1 text-sm font-bold text-white">Join the Neural Network</h3>
+            <p className="mb-4 text-xs text-[#a0a0a0]">Deep research, delivered bi-weekly. No spam.</p>
+            <form className="space-y-2">
+              <input
+                type="email"
+                placeholder="hello@world.com"
+                className="w-full rounded-sm border border-[#222222] bg-[#0a0a0a] px-3 py-2 text-sm text-white placeholder-[#444] transition-colors focus:border-[#00f5ff] focus:outline-none"
+              />
+              <button type="submit" className="w-full rounded-sm bg-[#1a1a1a] py-2 text-sm font-bold text-white transition-all duration-300 hover:bg-[#00f5ff] hover:text-[#0a0a0a]">
+                Subscribe
+              </button>
+            </form>
+          </div>
 
-      <section className="space-y-4">
-        <div>
-          <p className="text-sm uppercase tracking-[0.24em] text-slate-400">Latest notes</p>
-          <h2 className="mt-2 text-2xl font-semibold text-white">Mới cập nhật</h2>
-        </div>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {latestPosts.map((post) => (
-            <PostCard key={post.slug} post={post} />
-          ))}
-        </div>
+          <div>
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-[#f0f0f0]">Explore Topics</h3>
+            <div className="flex flex-wrap gap-2">
+              {getAllCategories().map((tag) => (
+                <Link key={tag} href={`/category/${slugifyTaxonomy(tag)}`}>
+                  <span className="cursor-pointer rounded-sm border border-[#222222] bg-[#111111] px-3 py-1 text-xs text-[#a0a0a0] transition-colors hover:border-[#00f5ff]/50 hover:text-[#00f5ff]">
+                    {tag}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="mb-4 border-b border-[#222222] pb-2 text-xs font-bold uppercase tracking-widest text-[#f0f0f0]">
+              Featured Papers
+            </h3>
+            <div className="space-y-5">
+              {featuredPapers.map((paper) => (
+                <div key={paper.title} className="group">
+                  <h4 className="mb-1 text-sm font-medium leading-snug text-[#f0f0f0] transition-colors group-hover:text-[#00f5ff]">
+                    {paper.title}
+                  </h4>
+                  <div className="flex items-center gap-3 font-[family-name:var(--font-jetbrains-mono)] text-[10px] text-[#606060]">
+                    <a href={`https://arxiv.org/abs/${paper.arxiv}`} target="_blank" rel="noreferrer" className="text-[#39ff14] hover:underline">
+                      arXiv:{paper.arxiv}
+                    </a>
+                    <span>·</span>
+                    <span>{paper.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </aside>
       </section>
     </div>
   );
