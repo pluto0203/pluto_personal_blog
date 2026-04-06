@@ -55,7 +55,7 @@ export function Footer() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-8 border-t border-[#222222] flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-[#606060] font-['Inter']">
-        <p>&copy; 2026 Neural Notes. All rights reserved.</p>
+        <p>&copy; 2026 Pluto AI. All rights reserved.</p>
         <p>Built with React + Tailwind</p>
       </div>
     </footer>

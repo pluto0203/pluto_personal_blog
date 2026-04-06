@@ -4,7 +4,7 @@ export type SiteLink = {
   external?: boolean;
 };
 
-export type SocialPlatform = "github" | "x" | "linkedin";
+export type SocialPlatform = "github" | "x" | "linkedin" | "facebook";
 
 export type SocialLink = {
   label: string;
@@ -41,8 +41,14 @@ export const SOCIAL_LINKS: SocialLink[] = [
     ariaLabel: "X / Twitter",
   },
   {
+    label: "Facebook",
+    href: "https://www.facebook.com/duynvt2003",
+    platform: "facebook",
+    ariaLabel: "Facebook",
+  },
+  {
     label: "LinkedIn",
-    href: "https://linkedin.com",
+    href: "https://www.linkedin.com/in/duynvt0203/",
     platform: "linkedin",
     ariaLabel: "LinkedIn",
   },

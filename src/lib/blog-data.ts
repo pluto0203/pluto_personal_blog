@@ -22,17 +22,17 @@ export type Series = {
 };
 
 export const author = {
-  name: "Pluto",
-  initials: "PT",
-  role: "AI Explorer · Engineer · Writer",
+  name: "Duy Nguyen Vo Thanh",
+  initials: "D",
+  role: "AI Engineer · AI Agent",
 };
 
 export const siteConfig = {
-  name: "Neural Notes",
+  name: "Pluto AI",
   headline: "Exploring AI systems, software engineering, and the architecture of machine cognition.",
   description:
     "Research-grade depth, practitioner-grade clarity — một blog cá nhân về AI, LLMs, tooling và cách build side project chỉn chu.",
-  email: "hello@neural-notes.dev",
+  email: "duynvt.work@gmail.com",
   github: "https://github.com/pluto0203",
 };
 

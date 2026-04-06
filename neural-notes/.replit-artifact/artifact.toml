@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "Neural Notes — AI Tech Blog"
+title = "Pluto AI — AI Tech Blog"
 version = "1.0.0"
 id = "artifacts/neural-notes"
 router = "path"

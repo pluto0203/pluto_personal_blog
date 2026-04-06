@@ -6,7 +6,7 @@ import { ABOUT_STATS, ABOUT_TOPICS, NEWSLETTER_COPY } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "About the author and the editorial direction behind Neural Notes.",
+  description: "About the author and the editorial direction behind Pluto AI.",
 };
 
 export default function AboutPage() {
@@ -20,7 +20,7 @@ export default function AboutPage() {
           <h1 className="mb-2 text-3xl font-black tracking-tight sm:text-4xl">{author.name}</h1>
           <p className="mb-4 font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#00f5ff]">{author.role}</p>
           <p className="mb-6 max-w-2xl leading-relaxed text-[#a0a0a0]">
-            Tôi viết về AI, LLM workflow, software engineering và cách biến side project thành thứ có thể demo, đo lường và deploy gọn gàng. Mục tiêu của blog này là làm cho các ý tưởng kỹ thuật trở nên rõ ràng nhưng vẫn đủ chiều sâu để hữu ích với người đang build thật.
+            Mình hay viết về AI, LLM và AI Agent. Đôi khi là breakdown một concept, đôi khi là ghi lại thứ mình đang build. Không có gì quá formal, chỉ là mình nghĩ gì thì viết nấy.
           </p>
           <SocialLinks variant="pill" />
         </div>
@@ -31,7 +31,7 @@ export default function AboutPage() {
           <section>
             <h2 className="mb-4 border-l-4 border-[#00f5ff] pl-4 text-xl font-black text-white">About This Blog</h2>
             <p className="mb-4 leading-relaxed">
-              Neural Notes là nơi mình viết về AI và machine learning theo cách mình ước đã có khi mới học: không quá hàn lâm để khó tiếp cận, nhưng cũng không đơn giản hoá đến mức mất giá trị thực tế.
+              Pluto AI là nơi mình viết về AI và machine learning theo cách mình ước đã có khi mới học: không quá hàn lâm để khó tiếp cận, nhưng cũng không đơn giản hoá đến mức mất giá trị thực tế.
             </p>
             <p className="leading-relaxed">
               Nội dung thường xoay quanh transformer architecture, prompt engineering, evaluation, RAG, CI/CD cho side projects và những workflow giúp một ý tưởng nhỏ trở thành sản phẩm có thể dùng được.

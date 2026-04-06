@@ -1,4 +1,4 @@
-# Neural Notes
+# Pluto AI
 
 A modern personal blog about **AI, LLMs, software engineering, and build-in-public notes**, built with `Next.js` and prepared for **GitHub Pages CI/CD**.
 

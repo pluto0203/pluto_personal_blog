@@ -47,7 +47,7 @@ export default function About() {
             <section>
               <h2 className="text-xl font-black text-white mb-4 border-l-4 border-[#00f5ff] pl-4">About This Blog</h2>
               <p className="mb-4">
-                Neural Notes is where I write about AI and machine learning with the depth I wish existed when I was learning these topics. Most blog posts either oversimplify to the point of uselessness or are so dense with notation that they're inaccessible to practitioners.
+                Pluto AI is where I write about AI and machine learning with the depth I wish existed when I was learning these topics. Most blog posts either oversimplify to the point of uselessness or are so dense with notation that they're inaccessible to practitioners.
               </p>
               <p>
                 My goal is to find the middle ground: rigorous enough to be useful to someone building real systems, but clear enough that you don't need a PhD to follow along. I cover transformer architecture, large language model internals, prompt engineering at scale, and emerging research that I think is underrated.

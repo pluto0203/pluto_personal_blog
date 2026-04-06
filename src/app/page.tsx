@@ -1,13 +1,21 @@
 import Link from "next/link";
-import { NewsletterCard } from "@/components/newsletter-card";
 import { PostCard } from "@/components/post-card";
-import { getAllCategories, getFeaturedPosts, getLatestPosts, siteConfig, slugifyTaxonomy } from "@/lib/blog-data";
-import { FEATURED_PAPERS, NEWSLETTER_COPY, TRENDING_TOPICS } from "@/lib/site-content";
+import { getAllCategories, getAllPosts, getFeaturedPosts, siteConfig, slugifyTaxonomy } from "@/lib/blog-data";
+
+const trendingTitles = [
+  "Why RLHF is the new fine-tuning",
+  "Deploying VLLMs on consumer hardware",
+  "The mathematics of vector embeddings",
+];
+
+const featuredPapers = [
+  { title: "Attention Is All You Need", arxiv: "1706.03762", date: "Jun 2017" },
+  { title: "Language Models are Few-Shot Learners", arxiv: "2005.14165", date: "May 2020" },
+];
 
 export default function Home() {
   const featuredPosts = getFeaturedPosts();
-  const latestPosts = getLatestPosts();
-  const categories = getAllCategories();
+  const latestPosts = getAllPosts().slice(0, 6);
 
   return (
     <div className="text-[#f0f0f0]">
@@ -33,9 +41,9 @@ export default function Home() {
 
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <h1 className="animate-fade-in-up mb-6 text-[clamp(3rem,8vw,6.5rem)] font-black leading-[1.05] tracking-tight">
-            Decoding <br className="sm:hidden" />
+            Latent <br className="sm:hidden" />
             <span className="bg-gradient-to-r from-white via-[#e8e8e8] to-[#00f5ff] bg-clip-text text-transparent">
-              Intelligence
+              Space
             </span>
           </h1>
           <p className="animate-fade-in-up-delay-1 mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-[#a0a0a0] sm:text-xl">
@@ -57,7 +65,7 @@ export default function Home() {
           </div>
           <div className="animate-fade-in-up-delay-3 flex items-center justify-center gap-2 font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#606060]">
             <span className="h-2 w-2 rounded-full bg-[#39ff14] animate-pulse" />
-            {latestPosts.length} articles · {categories.length} categories · practical notes updated weekly
+            {latestPosts.length} articles · {getAllCategories().length} categories · practical notes updated weekly
           </div>
         </div>
 
@@ -91,7 +99,7 @@ export default function Home() {
               Trending This Week
             </h3>
             <ul className="space-y-4">
-              {TRENDING_TOPICS.map((title, index) => (
+              {trendingTitles.map((title, index) => (
                 <li key={title} className="group flex cursor-pointer gap-4">
                   <span className="mt-[-2px] shrink-0 font-[family-name:var(--font-jetbrains-mono)] text-base font-bold text-[#00f5ff]">
                     0{index + 1}
@@ -102,17 +110,26 @@ export default function Home() {
             </ul>
           </div>
 
-          <NewsletterCard
-            title={NEWSLETTER_COPY.title}
-            description={NEWSLETTER_COPY.description}
-            buttonLabel={NEWSLETTER_COPY.buttonLabel}
-            placeholder={NEWSLETTER_COPY.placeholder}
-          />
+          <div className="relative overflow-hidden rounded-sm border border-[#222222] bg-[#111111] p-5">
+            <div className="absolute left-0 top-0 h-[2px] w-full bg-gradient-to-r from-[#00f5ff] to-[#c026d3]" />
+            <h3 className="mb-1 text-sm font-bold text-white">Join the Neural Network</h3>
+            <p className="mb-4 text-xs text-[#a0a0a0]">Deep research, delivered bi-weekly. No spam.</p>
+            <form className="space-y-2">
+              <input
+                type="email"
+                placeholder="hello@world.com"
+                className="w-full rounded-sm border border-[#222222] bg-[#0a0a0a] px-3 py-2 text-sm text-white placeholder-[#444] transition-colors focus:border-[#00f5ff] focus:outline-none"
+              />
+              <button type="submit" className="w-full rounded-sm bg-[#1a1a1a] py-2 text-sm font-bold text-white transition-all duration-300 hover:bg-[#00f5ff] hover:text-[#0a0a0a]">
+                Subscribe
+              </button>
+            </form>
+          </div>
 
           <div>
             <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-[#f0f0f0]">Explore Topics</h3>
             <div className="flex flex-wrap gap-2">
-              {categories.map((tag) => (
+              {getAllCategories().map((tag) => (
                 <Link key={tag} href={`/category/${slugifyTaxonomy(tag)}`}>
                   <span className="cursor-pointer rounded-sm border border-[#222222] bg-[#111111] px-3 py-1 text-xs text-[#a0a0a0] transition-colors hover:border-[#00f5ff]/50 hover:text-[#00f5ff]">
                     {tag}
@@ -127,7 +144,7 @@ export default function Home() {
               Featured Papers
             </h3>
             <div className="space-y-5">
-              {FEATURED_PAPERS.map((paper) => (
+              {featuredPapers.map((paper) => (
                 <div key={paper.title} className="group">
                   <h4 className="mb-1 text-sm font-medium leading-snug text-[#f0f0f0] transition-colors group-hover:text-[#00f5ff]">
                     {paper.title}

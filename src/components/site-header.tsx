@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, Search, SunMoon, X } from "lucide-react";
 import { Logo } from "@/components/logo";
-import { GitHubIcon, XIcon } from "@/components/social-icons";
+import { FacebookIcon, GitHubIcon, XIcon } from "@/components/social-icons";
 import { slugifyTaxonomy } from "@/lib/blog-shared";
 import { NAV_LINKS, SOCIAL_LINKS } from "@/lib/site-content";
 
@@ -26,6 +26,7 @@ export function SiteHeader({ categories }: SiteHeaderProps) {
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const githubLink = SOCIAL_LINKS.find((link) => link.platform === "github")?.href ?? "https://github.com";
+  const facebookLink = SOCIAL_LINKS.find((link) => link.platform === "facebook")?.href ?? "https://facebook.com";
   const xLink = SOCIAL_LINKS.find((link) => link.platform === "x")?.href ?? "https://twitter.com";
 
   return (
@@ -89,6 +90,9 @@ export function SiteHeader({ categories }: SiteHeaderProps) {
           </button>
           <a href={githubLink} target="_blank" rel="noreferrer" className="hidden transition-colors hover:text-[#00f5ff] sm:block" aria-label="GitHub">
             <GitHubIcon className="h-5 w-5" />
+          </a>
+          <a href={facebookLink} target="_blank" rel="noreferrer" className="hidden transition-colors hover:text-[#00f5ff] sm:block" aria-label="Facebook">
+            <FacebookIcon className="h-5 w-5" />
           </a>
           <a href={xLink} target="_blank" rel="noreferrer" className="hidden transition-colors hover:text-[#00f5ff] sm:block" aria-label="Twitter">
             <XIcon className="h-5 w-5" />

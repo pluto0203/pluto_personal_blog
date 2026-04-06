@@ -7,14 +7,14 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://pluto0203.github.io/pluto_personal_blog/"),
   title: {
-    default: "Neural Notes",
-    template: "%s | Neural Notes",
+    default: "Pluto AI",
+    template: "%s | Pluto AI",
   },
   description: "A modern tech/AI blog covering LLMs, engineering workflows and practical research notes.",
   openGraph: {
-    title: "Neural Notes",
+    title: "Pluto AI",
     description: "Exploring AI systems, software engineering, and the architecture of machine cognition.",
-    siteName: "Neural Notes",
+    siteName: "Pluto AI",
     type: "website",
   },
 };

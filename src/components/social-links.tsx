@@ -1,4 +1,4 @@
-import { GitHubIcon, LinkedInIcon, XIcon } from "@/components/social-icons";
+import { FacebookIcon, GitHubIcon, LinkedInIcon, XIcon } from "@/components/social-icons";
 import { SOCIAL_LINKS, type SocialLink, type SocialPlatform } from "@/lib/site-content";
 
 type SocialLinksProps = {
@@ -12,6 +12,8 @@ function getIcon(platform: SocialPlatform) {
       return GitHubIcon;
     case "linkedin":
       return LinkedInIcon;
+    case "facebook":
+      return FacebookIcon;
     case "x":
     default:
       return XIcon;

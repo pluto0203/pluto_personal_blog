@@ -18,6 +18,14 @@ export function XIcon({ className = "h-5 w-5" }: IconProps) {
   );
 }
 
+export function FacebookIcon({ className = "h-5 w-5" }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M13.5 21v-8.2h2.8l.42-3.2h-3.22V7.55c0-.93.26-1.56 1.6-1.56h1.72V3.13c-.3-.04-1.32-.13-2.5-.13-2.47 0-4.17 1.5-4.17 4.27v2.39H8.3v3.2h2.83V21h2.37Z" />
+    </svg>
+  );
+}
+
 export function LinkedInIcon({ className = "h-5 w-5" }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>

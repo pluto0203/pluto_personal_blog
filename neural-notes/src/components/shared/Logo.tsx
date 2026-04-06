@@ -10,7 +10,7 @@ export function Logo() {
         </svg>
       </div>
       <span className="font-['Oxanium'] font-bold text-xl tracking-wider text-[#f0f0f0] group-hover:text-[#00f5ff] transition-colors duration-300 leading-none">
-        NEURAL NOTES
+        PLUTO AI
       </span>
     </div>
   );

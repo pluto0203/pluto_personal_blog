@@ -45,7 +45,7 @@ export function SiteFooter() {
       </div>
 
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 border-t border-[#222222] px-4 pt-8 text-xs text-[#606060] sm:flex-row sm:px-6">
-        <p>© 2026 Neural Notes. All rights reserved.</p>
+        <p>© 2026 Pluto AI. All rights reserved.</p>
         <p>Built with Next.js + Tailwind + GitHub Actions</p>
       </div>
     </footer>
