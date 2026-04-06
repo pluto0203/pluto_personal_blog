@@ -88,50 +88,56 @@
 @keyframes twinkle {
   0%,
   100% {
-    opacity: 0.25;
+    opacity: 0.35;
     transform: scale(1);
   }
   50% {
-    opacity: 0.95;
-    transform: scale(1.6);
+    opacity: 1;
+    transform: scale(1.35);
   }
 }
 
 @keyframes shootingStar {
   0% {
     opacity: 0;
-    transform: translate3d(0, 0, 0) rotate(18deg) scaleX(0.2);
+    transform: translate3d(0, 0, 0) rotate(20deg) scaleX(0.35);
   }
-  8% {
-    opacity: 0.9;
+  10% {
+    opacity: 0.85;
   }
-  35% {
+  45% {
     opacity: 0.9;
-    transform: translate3d(180px, 90px, 0) rotate(18deg) scaleX(1);
+    transform: translate3d(78px, 36px, 0) rotate(20deg) scaleX(1);
   }
   100% {
     opacity: 0;
-    transform: translate3d(260px, 130px, 0) rotate(18deg) scaleX(0.3);
+    transform: translate3d(110px, 52px, 0) rotate(20deg) scaleX(0.45);
   }
 }
 
 .space-star {
   position: absolute;
   border-radius: 9999px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(34, 211, 238, 0.65) 55%, transparent 100%);
-  box-shadow: 0 0 8px rgba(34, 211, 238, 0.4);
-  animation: twinkle 4.5s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(191, 245, 255, 0.92) 38%, rgba(34, 211, 238, 0.3) 72%, transparent 100%);
+  box-shadow: 0 0 10px rgba(160, 240, 255, 0.35);
+  animation: twinkle 3.8s ease-in-out infinite;
+}
+
+.space-star--sparkle {
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 0.35),
+    0 0 18px rgba(34, 211, 238, 0.28);
 }
 
 .shooting-star {
   position: absolute;
-  width: 120px;
-  height: 2px;
+  width: 42px;
+  height: 1.5px;
   border-radius: 9999px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.95), rgba(34, 211, 238, 0));
-  box-shadow: 0 0 12px rgba(34, 211, 238, 0.45);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.95), rgba(34, 211, 238, 0.25));
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.35);
   opacity: 0;
-  animation: shootingStar 9s linear infinite;
+  animation: shootingStar 6s linear infinite;
 }
 
 .animate-fade-in-up {
