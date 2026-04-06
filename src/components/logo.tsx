@@ -9,7 +9,7 @@ export function Logo() {
           backgroundImage: "url('/PlutoAI.jpg')",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          backgroundSize: "170%",
+          backgroundSize: "100%",
         }}
       />
     </div>
