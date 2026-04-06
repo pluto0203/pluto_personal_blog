@@ -7,8 +7,8 @@ export function Logo() {
         <Image
           src="/PlutoAI.jpg"
           alt="Pluto AI logo"
-          width={600}
-          height={516}
+          width={200}
+          height={172}
           priority
           unoptimized
           className="h-full w-full object-cover"
