@@ -9,7 +9,6 @@ import { FacebookIcon, GitHubIcon, XIcon, LinkedInIcon } from "@/components/soci
 import { ThemeToggle } from "@/components/theme-toggle";
 import { slugifyTaxonomy } from "@/lib/blog-shared";
 import { NAV_LINKS, SOCIAL_LINKS } from "@/lib/site-content";
-import { link } from "fs";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") {
