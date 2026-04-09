@@ -23,9 +23,9 @@ export type Series = {
 
 export const siteConfig = {
   name: "Pluto AI",
-  headline: "Mình là Duy — ghi lại hành trình học AI, build RAG demo và ship LLM side project theo cách thực tế nhất có thể.",
+  headline: "Mình là Duy. Ghi lại hành trình học AI theo cách thực chiến: build RAG, làm demo, và biến các project chạy được thật. Không chỉ là notes, đây là nơi chia sẻ kinh nghiệm, thất bại và bài học cuộc sống.",
   description:
-    "Một dev blog cá nhân về LLMs, prompt engineering, RAG, tooling và những mini-project biến ghi chú kỹ thuật thành demo có thể chạy được.",
+    "Một dev blog cá nhân về kiến thức AI và những mini-projects.",
   email: "duynvt.work@gmail.com",
   github: "https://github.com/pluto0203",
   url: "https://pluto0203.github.io/pluto_personal_blog",
@@ -33,20 +33,20 @@ export const siteConfig = {
 
 export const series: Series[] = [
   {
-    slug: "ai-building-blocks",
-    title: "Toán học cho AI",
-    description: "Chuỗi bài đi từ intuition đến công thức, giúp việc học attention, embeddings và đánh giá model trở nên bớt mơ hồ hơn.",
-    cadence: "Bi-weekly",
-    level: "Beginner → Intermediate",
-    postSlugs: ["attention-mechanisms-transformers", "from-rag-note-to-mini-demo", "evaluate-llm-apps"],
-  },
-  {
     slug: "engineering-playbook",
     title: "Tôi đã thử và thất bại",
     description: "Một series thực tế về những lần build side project AI chưa trơn tru, các sai lầm gặp phải và điều rút ra sau mỗi lần thử.",
     cadence: "Weekly",
     level: "Practical",
     postSlugs: ["ship-blog-with-github-actions", "prompt-engineering-production"],
+  },
+  {
+    slug: "ai-building-blocks",
+    title: "Toán học cho AI",
+    description: "Chuỗi bài đi từ intuition đến công thức, giúp việc học attention, embeddings và đánh giá model trở nên bớt mơ hồ hơn.",
+    cadence: "Bi-weekly",
+    level: "Beginner → Intermediate",
+    postSlugs: ["attention-mechanisms-transformers", "from-rag-note-to-mini-demo", "evaluate-llm-apps"],
   },
 ];
 

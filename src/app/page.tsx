@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HeroFeaturedPanel from "@/components/hero-featured-panel";
 import { PostCard } from "@/components/post-card";
 import { getAllCategories, getAllPosts, getFeaturedPosts, siteConfig, slugifyTaxonomy } from "@/lib/blog-data";
 import { CATEGORY_GUIDE, FEATURED_PAPERS, HERO_PILLS, PROJECT_SHOWCASE, TRENDING_TOPICS } from "@/lib/site-content";
@@ -42,8 +43,8 @@ export default function Home() {
               Pluto AI • dev log for builders
             </span>
             <h1 className="animate-fade-in-up mb-5 text-[clamp(2.8rem,7vw,5.5rem)] font-black leading-[1.02] tracking-tight text-white">
-              Build AI notes into
-              <span className="bg-gradient-to-r from-white via-[#e8e8e8] to-[#00f5ff] bg-clip-text text-transparent"> usable demos</span>
+                 AI Tập Sự
+              <span className="bg-gradient-to-r from-white via-[#e8e8e8] to-[#00f5ff] bg-clip-text text-transparent">  Zero to Hero</span>
             </h1>
             <p className="animate-fade-in-up-delay-1 mb-4 max-w-3xl text-lg leading-8 text-[#b7c2ce] sm:text-[1.18rem]">
               {siteConfig.headline}
@@ -61,7 +62,7 @@ export default function Home() {
                 href="/about"
                 className="w-full rounded-sm border border-[#00f5ff]/50 bg-transparent px-7 py-3.5 text-center font-bold text-[#00f5ff] transition-all duration-300 hover:border-[#00f5ff] hover:bg-[#00f5ff]/10 sm:w-auto"
               >
-                Về Pluto
+                About me
               </Link>
             </div>
 
@@ -74,38 +75,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-[#0d1522]/80 p-5 sm:p-6">
-            <div className="absolute left-0 top-0 h-[2px] w-full bg-gradient-to-r from-[#00f5ff] via-[#39ff14] to-[#c026d3]" />
-            <p className="mb-4 font-[family-name:var(--font-jetbrains-mono)] text-[11px] uppercase tracking-[0.24em] text-[#00f5ff]">Quick snapshot</p>
-
-            <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-              <div className="rounded-2xl border border-[#222222] bg-[#111111]/90 p-4">
-                <div className="text-xs text-[#606060]">Articles</div>
-                <div className="mt-1 text-2xl font-black text-white">{allPosts.length}</div>
-              </div>
-              <div className="rounded-2xl border border-[#222222] bg-[#111111]/90 p-4">
-                <div className="text-xs text-[#606060]">Categories</div>
-                <div className="mt-1 text-2xl font-black text-white">{categories.length}</div>
-              </div>
-              <div className="rounded-2xl border border-[#222222] bg-[#111111]/90 p-4">
-                <div className="text-xs text-[#606060]">Focus</div>
-                <div className="mt-1 text-sm font-semibold text-white">LLMs · RAG · Prompting</div>
-              </div>
-            </div>
-
-            {newestPost ? (
-              <div className="mt-5 rounded-2xl border border-[#222222] bg-[#111111]/90 p-4">
-                <p className="mb-2 text-[11px] uppercase tracking-[0.24em] text-[#39ff14]">Latest drop</p>
-                <h2 className="mb-2 text-lg font-bold text-white">{newestPost.title}</h2>
-                <p className="mb-3 text-sm leading-6 text-[#a0a0a0]">{newestPost.excerpt}</p>
-                <div className="flex flex-wrap items-center gap-2 font-[family-name:var(--font-jetbrains-mono)] text-[11px]">
-                  <span className="text-[#8a8a8a]">{newestPost.dateLabel}</span>
-                  <span className="text-[#4a4a4a]">•</span>
-                  <span className="text-[#00f5ff]">{newestPost.readTime}</span>
-                </div>
-              </div>
-            ) : null}
-          </div>
+          <HeroFeaturedPanel />
         </div>
       </section>
 
