@@ -4,7 +4,7 @@ import { series } from "@/lib/blog-data";
 
 export const metadata: Metadata = {
   title: "Series",
-  description: "Reading paths grouped by AI and engineering themes.",
+  description: "Chuỗi bài viết nhiều phần như ‘Tôi đã thử và thất bại’ hay ‘Toán học cho AI’.",
 };
 
 export default function SeriesPage() {
@@ -16,7 +16,7 @@ export default function SeriesPage() {
           <h1 className="text-3xl font-black tracking-tight text-[#f0f0f0]">Series</h1>
         </div>
         <p className="max-w-3xl font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#606060]">
-          Structured reading paths for AI, LLM workflows and practical engineering notes.
+          Chuỗi nhiều bài viết theo từng chủ đề, ví dụ như “Toán học cho AI” hoặc “Tôi đã thử và thất bại”.
         </p>
       </div>
 

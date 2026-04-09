@@ -25,11 +25,15 @@ export type TocHeading = {
 };
 
 function formatDateLabel(date: string) {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
+  const [year, month, day] = date.split("-").map(Number);
+  const normalizedDate = new Date(Date.UTC(year, (month ?? 1) - 1, day ?? 1));
+
+  return new Intl.DateTimeFormat("vi-VN", {
     day: "2-digit",
+    month: "2-digit",
     year: "numeric",
-  }).format(new Date(date));
+    timeZone: "UTC",
+  }).format(normalizedDate);
 }
 
 function calculateReadingTime(content: string) {
@@ -38,8 +42,8 @@ function calculateReadingTime(content: string) {
     .split(/\s+/)
     .filter(Boolean).length;
 
-  const minutes = Math.max(1, Math.round(words / 200));
-  return `${minutes} min read`;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return `${minutes} phút đọc`;
 }
 
 function getPostFiles() {

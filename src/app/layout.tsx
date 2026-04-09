@@ -1,22 +1,62 @@
 import type { Metadata } from "next";
+import { Analytics } from "@/components/analytics";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SpaceBackground } from "@/components/space-background";
+import { author, siteConfig } from "@/lib/blog-data";
 import { getAllCategories } from "@/lib/content";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://pluto0203.github.io/pluto_personal_blog/"),
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Pluto AI",
-    template: "%s | Pluto AI",
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
   },
-  description: "A modern tech/AI blog covering LLMs, engineering workflows and practical research notes.",
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  keywords: ["AI blog", "LLMs", "Prompt Engineering", "RAG", "AI tools", "Machine Learning", "GitHub Pages"],
+  authors: [{ name: author.name, url: siteConfig.github }],
+  creator: author.name,
+  publisher: siteConfig.name,
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/rss+xml": `${siteConfig.url}/rss.xml`,
+    },
+  },
   openGraph: {
-    title: "Pluto AI",
-    description: "Exploring AI systems, software engineering, and the architecture of machine cognition.",
-    siteName: "Pluto AI",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    locale: "vi_VN",
     type: "website",
+    images: [
+      {
+        url: "/PlutoAI.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Pluto AI blog preview cover",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: ["/PlutoAI.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
@@ -28,10 +68,18 @@ export default function RootLayout({
   const categories = getAllCategories();
 
   return (
-    <html lang="en">
-      <body className="min-h-screen overflow-x-hidden bg-[#030712] text-[#f0f0f0] antialiased">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var key='pluto-theme';var stored=localStorage.getItem(key);var prefersLight=window.matchMedia('(prefers-color-scheme: light)').matches;document.documentElement.dataset.theme=stored||(prefersLight?'light':'dark');}catch(e){document.documentElement.dataset.theme='dark';}})();`,
+          }}
+        />
+      </head>
+      <body className="min-h-screen overflow-x-hidden bg-[var(--background)] text-[var(--foreground)] antialiased transition-colors duration-300">
+        <Analytics />
         <SpaceBackground />
-        <div className="relative z-10 min-h-screen text-[#f0f0f0]">
+        <div className="relative z-10 min-h-screen text-[var(--foreground)]">
           <SiteHeader categories={categories} />
           <main className="relative z-10 mx-auto max-w-7xl px-4 py-8 sm:px-6">{children}</main>
           <SiteFooter />

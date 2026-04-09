@@ -14,6 +14,7 @@ export function SiteFooter() {
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#a0a0a0]">
             Exploring AI systems, large language models, and software engineering with research-grade depth and practitioner-grade clarity.
           </p>
+          <p className="mt-3 text-xs text-[#606060]">RSS, newsletter và GitHub Discussions đều đã sẵn sàng.</p>
         </div>
 
         <div>

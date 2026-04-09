@@ -10,7 +10,7 @@ import {
 } from "@/lib/content";
 
 export type { Post } from "@/lib/blog-shared";
-export { slugifyTaxonomy } from "@/lib/blog-shared";
+export { author, slugifyTaxonomy } from "@/lib/blog-shared";
 
 export type Series = {
   slug: string;
@@ -21,34 +21,29 @@ export type Series = {
   postSlugs: string[];
 };
 
-export const author = {
-  name: "Duy Nguyen Vo Thanh",
-  initials: "D",
-  role: "AI Engineer · AI Agent",
-};
-
 export const siteConfig = {
   name: "Pluto AI",
-  headline: "Exploring AI systems, software engineering, and the architecture of machine cognition.",
+  headline: "Mình là Duy — ghi lại hành trình học AI, build RAG demo và ship LLM side project theo cách thực tế nhất có thể.",
   description:
-    "Research-grade depth, practitioner-grade clarity — một blog cá nhân về AI, LLMs, tooling và cách build side project chỉn chu.",
+    "Một dev blog cá nhân về LLMs, prompt engineering, RAG, tooling và những mini-project biến ghi chú kỹ thuật thành demo có thể chạy được.",
   email: "duynvt.work@gmail.com",
   github: "https://github.com/pluto0203",
+  url: "https://pluto0203.github.io/pluto_personal_blog",
 };
 
 export const series: Series[] = [
   {
     slug: "ai-building-blocks",
-    title: "AI Building Blocks",
-    description: "Những bài nền tảng để đi từ người học AI sang người có thể build demo và ship feature thực tế.",
+    title: "Toán học cho AI",
+    description: "Chuỗi bài đi từ intuition đến công thức, giúp việc học attention, embeddings và đánh giá model trở nên bớt mơ hồ hơn.",
     cadence: "Bi-weekly",
     level: "Beginner → Intermediate",
     postSlugs: ["attention-mechanisms-transformers", "from-rag-note-to-mini-demo", "evaluate-llm-apps"],
   },
   {
     slug: "engineering-playbook",
-    title: "Engineering Playbook",
-    description: "Workflow về CI/CD, deployment, DX và các thực hành giúp side project trở nên đáng tin cậy hơn.",
+    title: "Tôi đã thử và thất bại",
+    description: "Một series thực tế về những lần build side project AI chưa trơn tru, các sai lầm gặp phải và điều rút ra sau mỗi lần thử.",
     cadence: "Weekly",
     level: "Practical",
     postSlugs: ["ship-blog-with-github-actions", "prompt-engineering-production"],

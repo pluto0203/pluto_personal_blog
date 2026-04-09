@@ -1,25 +1,22 @@
 import Link from "next/link";
 import { PostCard } from "@/components/post-card";
 import { getAllCategories, getAllPosts, getFeaturedPosts, siteConfig, slugifyTaxonomy } from "@/lib/blog-data";
-
-const trendingTitles = [
-  "Why RLHF is the new fine-tuning",
-  "Deploying VLLMs on consumer hardware",
-  "The mathematics of vector embeddings",
-];
-
-const featuredPapers = [
-  { title: "Attention Is All You Need", arxiv: "1706.03762", date: "Jun 2017" },
-  { title: "Language Models are Few-Shot Learners", arxiv: "2005.14165", date: "May 2020" },
-];
+import { CATEGORY_GUIDE, FEATURED_PAPERS, HERO_PILLS, PROJECT_SHOWCASE, TRENDING_TOPICS } from "@/lib/site-content";
 
 export default function Home() {
+  const allPosts = getAllPosts();
   const featuredPosts = getFeaturedPosts();
-  const latestPosts = getAllPosts().slice(0, 6);
+  const latestPosts = allPosts.slice(0, 6);
+  const newestPost = latestPosts[0];
+  const categories = getAllCategories();
+
+  const articleCountByCategory = Object.fromEntries(
+    categories.map((category) => [slugifyTaxonomy(category), allPosts.filter((post) => post.category === category).length]),
+  );
 
   return (
     <div className="text-[#f0f0f0]">
-      <section className="relative overflow-hidden border-b border-[#222222] pb-24 pt-20">
+      <section className="relative overflow-hidden border-b border-[#222222] pb-20 pt-14 sm:pb-24 sm:pt-20">
         <div className="pointer-events-none absolute inset-0">
           <svg className="h-full w-full opacity-[0.035]" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -39,49 +36,117 @@ export default function Home() {
           <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 50% 60%, rgba(0,245,255,0.04) 0%, transparent 60%)" }} />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-4xl text-center">
-          <h1 className="animate-fade-in-up mb-6 text-[clamp(3rem,8vw,6.5rem)] font-black leading-[1.05] tracking-tight">
-            AI <br className="sm:hidden" />
-            <span className="bg-gradient-to-r from-white via-[#e8e8e8] to-[#00f5ff] bg-clip-text text-transparent">
-              Tập Sự
+        <div className="relative z-10 mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+          <div>
+            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#00f5ff]/25 bg-[#00f5ff]/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#00f5ff]">
+              Pluto AI • dev log for builders
             </span>
-          </h1>
-          <p className="animate-fade-in-up-delay-1 mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-[#a0a0a0] sm:text-xl">
-            {siteConfig.headline}
-          </p>
-          <div className="animate-fade-in-up-delay-2 mb-14 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              href="/blog"
-              className="w-full rounded-sm bg-[#00f5ff] px-8 py-4 text-center font-bold text-[#0a0a0a] transition-all duration-300 hover:bg-white hover:shadow-[0_0_24px_rgba(0,245,255,0.45)] sm:w-auto"
-            >
-              Read Latest
-            </Link>
-            <Link
-              href="/archive"
-              className="w-full rounded-sm border border-[#00f5ff]/50 bg-transparent px-8 py-4 text-center font-bold text-[#00f5ff] transition-all duration-300 hover:border-[#00f5ff] hover:bg-[#00f5ff]/10 sm:w-auto"
-            >
-              Explore Topics
-            </Link>
+            <h1 className="animate-fade-in-up mb-5 text-[clamp(2.8rem,7vw,5.5rem)] font-black leading-[1.02] tracking-tight text-white">
+              Build AI notes into
+              <span className="bg-gradient-to-r from-white via-[#e8e8e8] to-[#00f5ff] bg-clip-text text-transparent"> usable demos</span>
+            </h1>
+            <p className="animate-fade-in-up-delay-1 mb-4 max-w-3xl text-lg leading-8 text-[#b7c2ce] sm:text-[1.18rem]">
+              {siteConfig.headline}
+            </p>
+            <p className="animate-fade-in-up-delay-1 mb-8 max-w-2xl text-base leading-7 text-[#a0a0a0] sm:text-lg">{siteConfig.description}</p>
+
+            <div className="animate-fade-in-up-delay-2 mb-8 flex flex-col items-start gap-3 sm:flex-row">
+              <Link
+                href={newestPost ? `/post/${newestPost.slug}` : "/blog"}
+                className="w-full rounded-sm bg-[#00f5ff] px-7 py-3.5 text-center font-bold text-[#0a0a0a] transition-all duration-300 hover:bg-white hover:shadow-[0_0_24px_rgba(0,245,255,0.45)] sm:w-auto"
+              >
+                Xem bài mới nhất
+              </Link>
+              <Link
+                href="/about"
+                className="w-full rounded-sm border border-[#00f5ff]/50 bg-transparent px-7 py-3.5 text-center font-bold text-[#00f5ff] transition-all duration-300 hover:border-[#00f5ff] hover:bg-[#00f5ff]/10 sm:w-auto"
+              >
+                Về Pluto
+              </Link>
+            </div>
+
+            <div className="animate-fade-in-up-delay-3 flex flex-wrap gap-2">
+              {HERO_PILLS.map((pill) => (
+                <span key={pill} className="rounded-full border border-[#222222] bg-[#111111] px-3 py-1 text-xs text-[#a0a0a0]">
+                  {pill}
+                </span>
+              ))}
+            </div>
           </div>
-          <div className="animate-fade-in-up-delay-3 flex items-center justify-center gap-2 font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#606060]">
-            <span className="h-2 w-2 rounded-full bg-[#39ff14] animate-pulse" />
-            {latestPosts.length} articles · {getAllCategories().length} categories · practical notes updated weekly
+
+          <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-[#0d1522]/80 p-5 sm:p-6">
+            <div className="absolute left-0 top-0 h-[2px] w-full bg-gradient-to-r from-[#00f5ff] via-[#39ff14] to-[#c026d3]" />
+            <p className="mb-4 font-[family-name:var(--font-jetbrains-mono)] text-[11px] uppercase tracking-[0.24em] text-[#00f5ff]">Quick snapshot</p>
+
+            <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+              <div className="rounded-2xl border border-[#222222] bg-[#111111]/90 p-4">
+                <div className="text-xs text-[#606060]">Articles</div>
+                <div className="mt-1 text-2xl font-black text-white">{allPosts.length}</div>
+              </div>
+              <div className="rounded-2xl border border-[#222222] bg-[#111111]/90 p-4">
+                <div className="text-xs text-[#606060]">Categories</div>
+                <div className="mt-1 text-2xl font-black text-white">{categories.length}</div>
+              </div>
+              <div className="rounded-2xl border border-[#222222] bg-[#111111]/90 p-4">
+                <div className="text-xs text-[#606060]">Focus</div>
+                <div className="mt-1 text-sm font-semibold text-white">LLMs · RAG · Prompting</div>
+              </div>
+            </div>
+
+            {newestPost ? (
+              <div className="mt-5 rounded-2xl border border-[#222222] bg-[#111111]/90 p-4">
+                <p className="mb-2 text-[11px] uppercase tracking-[0.24em] text-[#39ff14]">Latest drop</p>
+                <h2 className="mb-2 text-lg font-bold text-white">{newestPost.title}</h2>
+                <p className="mb-3 text-sm leading-6 text-[#a0a0a0]">{newestPost.excerpt}</p>
+                <div className="flex flex-wrap items-center gap-2 font-[family-name:var(--font-jetbrains-mono)] text-[11px]">
+                  <span className="text-[#8a8a8a]">{newestPost.dateLabel}</span>
+                  <span className="text-[#4a4a4a]">•</span>
+                  <span className="text-[#00f5ff]">{newestPost.readTime}</span>
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
-
-        <div className="pointer-events-none absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-[#0a0a0a] to-transparent" />
       </section>
 
-      <section className="mx-auto flex max-w-7xl flex-col gap-12 py-16 lg:flex-row">
+      <section className="mx-auto max-w-7xl py-12">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="mb-2 font-[family-name:var(--font-jetbrains-mono)] text-xs uppercase tracking-[0.24em] text-[#00f5ff]">Content map</p>
+            <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Explore by category</h2>
+          </div>
+          <Link href="/blog#search" className="text-sm font-medium text-[#00f5ff] underline-offset-4 hover:underline">
+            Mở search & filters
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {CATEGORY_GUIDE.map((item) => (
+            <Link key={item.slug} href={`/category/${item.slug}`}>
+              <article className="h-full rounded-2xl border border-white/[0.08] bg-[#111111]/90 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#00f5ff]/30 hover:shadow-[0_0_24px_rgba(0,245,255,0.12)]">
+                <div className="mb-3 flex items-center justify-between gap-3">
+                  <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+                  <span className="rounded-full border border-[#222222] px-2.5 py-1 text-[11px] text-[#00f5ff]">
+                    {articleCountByCategory[item.slug] ?? 0} bài
+                  </span>
+                </div>
+                <p className="text-sm leading-6 text-[#a0a0a0]">{item.description}</p>
+              </article>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto flex max-w-7xl flex-col gap-12 py-8 lg:flex-row">
         <div className="lg:w-3/4">
           <div className="mb-8 flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <h2 className="text-2xl font-bold tracking-tight">Latest Posts</h2>
+              <h2 className="text-2xl font-bold tracking-tight text-white">Bài mới & đáng đọc</h2>
               <div className="h-[2px] w-16 bg-[#00f5ff]" />
             </div>
             <Link href="/blog">
               <span className="cursor-pointer text-sm font-medium text-[#00f5ff] underline-offset-4 decoration-[#00f5ff]/50 hover:underline">
-                View All
+                Xem tất cả
               </span>
             </Link>
           </div>
@@ -99,7 +164,7 @@ export default function Home() {
               Trending This Week
             </h3>
             <ul className="space-y-4">
-              {trendingTitles.map((title, index) => (
+              {TRENDING_TOPICS.map((title, index) => (
                 <li key={title} className="group flex cursor-pointer gap-4">
                   <span className="mt-[-2px] shrink-0 font-[family-name:var(--font-jetbrains-mono)] text-base font-bold text-[#00f5ff]">
                     0{index + 1}
@@ -112,24 +177,17 @@ export default function Home() {
 
           <div className="relative overflow-hidden rounded-sm border border-[#222222] bg-[#111111] p-5">
             <div className="absolute left-0 top-0 h-[2px] w-full bg-gradient-to-r from-[#00f5ff] to-[#c026d3]" />
-            <h3 className="mb-1 text-sm font-bold text-white">Join the Neural Network</h3>
-            <p className="mb-4 text-xs text-[#a0a0a0]">Deep research, delivered bi-weekly. No spam.</p>
-            <form className="space-y-2">
-              <input
-                type="email"
-                placeholder="hello@world.com"
-                className="w-full rounded-sm border border-[#222222] bg-[#0a0a0a] px-3 py-2 text-sm text-white placeholder-[#444] transition-colors focus:border-[#00f5ff] focus:outline-none"
-              />
-              <button type="submit" className="w-full rounded-sm bg-[#1a1a1a] py-2 text-sm font-bold text-white transition-all duration-300 hover:bg-[#00f5ff] hover:text-[#0a0a0a]">
-                Subscribe
-              </button>
-            </form>
+            <h3 className="mb-1 text-sm font-bold text-white">Tìm bài nhanh hơn</h3>
+            <p className="mb-4 text-sm leading-6 text-[#a0a0a0]">Search bar + tag cloud đã có trong trang blog để bạn lọc đúng chủ đề mình đang học.</p>
+            <Link href="/blog#search" className="inline-flex rounded-sm bg-[#1a1a1a] px-4 py-2 text-sm font-bold text-white transition-all duration-300 hover:bg-[#00f5ff] hover:text-[#0a0a0a]">
+              Mở bộ lọc
+            </Link>
           </div>
 
           <div>
             <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-[#f0f0f0]">Explore Topics</h3>
             <div className="flex flex-wrap gap-2">
-              {getAllCategories().map((tag) => (
+              {categories.map((tag) => (
                 <Link key={tag} href={`/category/${slugifyTaxonomy(tag)}`}>
                   <span className="cursor-pointer rounded-sm border border-[#222222] bg-[#111111] px-3 py-1 text-xs text-[#a0a0a0] transition-colors hover:border-[#00f5ff]/50 hover:text-[#00f5ff]">
                     {tag}
@@ -140,15 +198,11 @@ export default function Home() {
           </div>
 
           <div>
-            <h3 className="mb-4 border-b border-[#222222] pb-2 text-xs font-bold uppercase tracking-widest text-[#f0f0f0]">
-              Featured Papers
-            </h3>
+            <h3 className="mb-4 border-b border-[#222222] pb-2 text-xs font-bold uppercase tracking-widest text-[#f0f0f0]">Featured Papers</h3>
             <div className="space-y-5">
-              {featuredPapers.map((paper) => (
+              {FEATURED_PAPERS.map((paper) => (
                 <div key={paper.title} className="group">
-                  <h4 className="mb-1 text-sm font-medium leading-snug text-[#f0f0f0] transition-colors group-hover:text-[#00f5ff]">
-                    {paper.title}
-                  </h4>
+                  <h4 className="mb-1 text-sm font-medium leading-snug text-[#f0f0f0] transition-colors group-hover:text-[#00f5ff]">{paper.title}</h4>
                   <div className="flex items-center gap-3 font-[family-name:var(--font-jetbrains-mono)] text-[10px] text-[#606060]">
                     <a href={`https://arxiv.org/abs/${paper.arxiv}`} target="_blank" rel="noreferrer" className="text-[#39ff14] hover:underline">
                       arXiv:{paper.arxiv}
@@ -161,6 +215,49 @@ export default function Home() {
             </div>
           </div>
         </aside>
+      </section>
+
+      <section id="projects" className="border-t border-[#222222] py-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="mb-2 font-[family-name:var(--font-jetbrains-mono)] text-xs uppercase tracking-[0.24em] text-[#39ff14]">Projects / Demos</p>
+              <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Mini-projects đang được build song song với blog</h2>
+            </div>
+            <a href={siteConfig.github} target="_blank" rel="noreferrer" className="text-sm font-medium text-[#00f5ff] underline-offset-4 hover:underline">
+              Xem GitHub profile
+            </a>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+            {PROJECT_SHOWCASE.map((project) => (
+              <article key={project.title} className="flex h-full flex-col rounded-2xl border border-white/[0.08] bg-[#111111]/90 p-5">
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <h3 className="text-lg font-semibold text-white">{project.title}</h3>
+                  <span className="rounded-full border border-[#39ff14]/30 bg-[#39ff14]/8 px-2.5 py-1 text-[11px] text-[#39ff14]">{project.status}</span>
+                </div>
+                <p className="mb-4 text-sm leading-6 text-[#a0a0a0]">{project.description}</p>
+                <div className="mb-5 flex flex-wrap gap-2">
+                  {project.stack.map((item) => (
+                    <span key={item} className="rounded-full border border-[#222222] bg-[#0a0a0a] px-2.5 py-1 text-[11px] text-[#a0a0a0]">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-auto flex flex-wrap gap-3">
+                  <a href={project.sourceHref} target="_blank" rel="noreferrer" className="rounded-sm bg-[#1a1a1a] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#00f5ff] hover:text-[#0a0a0a]">
+                    {project.sourceLabel}
+                  </a>
+                  {project.demoHref ? (
+                    <a href={project.demoHref} target="_blank" rel="noreferrer" className="rounded-sm border border-[#00f5ff]/40 px-4 py-2 text-sm font-semibold text-[#00f5ff] transition-colors hover:bg-[#00f5ff]/10">
+                      {project.demoLabel ?? "Live demo"}
+                    </a>
+                  ) : null}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
     </div>
   );

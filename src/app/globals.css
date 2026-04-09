@@ -1,15 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
+  --background: #030712;
+  --background-elevated: #111111;
+  --background-soft: #0a0a0a;
   --foreground: #f0f0f0;
+  --muted: #a0a0a0;
+  --border-color: #222222;
   --font-inter: "Inter", "Segoe UI", Arial, sans-serif;
   --font-jetbrains-mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
   --font-oxanium: "Oxanium", "Segoe UI", Arial, sans-serif;
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  --background: #f6fbff;
+  --background-elevated: rgba(255, 255, 255, 0.88);
+  --background-soft: #eef4fb;
+  --foreground: #0f172a;
+  --muted: #475569;
+  --border-color: rgba(15, 23, 42, 0.12);
+  color-scheme: light;
 }
 
 @theme inline {
-  --color-border: #222222;
+  --color-border: var(--border-color);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
@@ -31,9 +46,22 @@
       radial-gradient(circle at 80% 20%, rgba(192, 38, 211, 0.12), transparent 0, transparent 24%),
       linear-gradient(180deg, #020817 0%, #06101f 45%, #030712 100%);
     background-attachment: fixed;
-    color: #f0f0f0;
+    color: var(--foreground);
     -webkit-font-smoothing: antialiased;
     font-family: var(--font-inter), sans-serif;
+    line-height: 1.6;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  html[data-theme="light"] body {
+    background:
+      radial-gradient(circle at top, rgba(56, 189, 248, 0.16), transparent 0, transparent 34%),
+      radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.12), transparent 0, transparent 24%),
+      linear-gradient(180deg, #f8fbff 0%, #eef4ff 48%, #f8fafc 100%);
   }
 
   ::selection {
@@ -51,6 +79,92 @@
   p {
     text-wrap: pretty;
   }
+
+  body,
+  input,
+  button,
+  textarea {
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+}
+
+.space-backdrop {
+  background:
+    radial-gradient(circle at top, rgba(0, 245, 255, 0.12), transparent 0, transparent 32%),
+    radial-gradient(circle at 80% 20%, rgba(88, 28, 135, 0.18), transparent 0, transparent 26%),
+    linear-gradient(180deg, #020817 0%, #06101f 45%, #030712 100%);
+}
+
+.space-grid {
+  opacity: 0.4;
+}
+
+html[data-theme="light"] .space-backdrop {
+  background:
+    radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 0, transparent 36%),
+    radial-gradient(circle at 80% 20%, rgba(167, 139, 250, 0.12), transparent 0, transparent 28%),
+    linear-gradient(180deg, #f8fbff 0%, #eef4ff 48%, #f8fafc 100%);
+}
+
+html[data-theme="light"] .space-grid {
+  opacity: 0.16;
+}
+
+html[data-theme="light"] .space-star {
+  background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(191, 245, 255, 0.75) 40%, rgba(34, 211, 238, 0.16) 76%, transparent 100%);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.16);
+}
+
+html[data-theme="light"] .space-star--sparkle {
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.35),
+    0 0 14px rgba(59, 130, 246, 0.16);
+}
+
+html[data-theme="light"] .shooting-star {
+  opacity: 0.22;
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.18);
+}
+
+html[data-theme="light"] [class*="bg-[#111111]"],
+html[data-theme="light"] [class*="bg-[#0a0a0a]"],
+html[data-theme="light"] [class*="bg-[#1a1a1a]"],
+html[data-theme="light"] [class*="bg-[#0d1522]/80"],
+html[data-theme="light"] [class*="bg-black/80"] {
+  background-color: rgba(255, 255, 255, 0.82) !important;
+}
+
+html[data-theme="light"] [class*="text-[#f0f0f0]"],
+html[data-theme="light"] [class*="text-white"] {
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] [class*="text-[#d0d0d0]"],
+html[data-theme="light"] [class*="text-[#d8dee9]"],
+html[data-theme="light"] [class*="text-[#c6ced8]"],
+html[data-theme="light"] [class*="text-[#cdd6e0]"],
+html[data-theme="light"] [class*="text-[#c4ced8]"],
+html[data-theme="light"] [class*="text-[#b7c2ce]"] {
+  color: #334155 !important;
+}
+
+html[data-theme="light"] [class*="text-[#a0a0a0]"],
+html[data-theme="light"] [class*="text-[#9098a6]"],
+html[data-theme="light"] [class*="text-[#8a8a8a]"],
+html[data-theme="light"] [class*="text-[#606060]"] {
+  color: #64748b !important;
+}
+
+html[data-theme="light"] [class*="border-[#222222]"],
+html[data-theme="light"] [class*="border-[#333]"],
+html[data-theme="light"] [class*="border-white/[0.08]"],
+html[data-theme="light"] [class*="border-white/[0.06]"],
+html[data-theme="light"] [class*="border-white/[0.05]"] {
+  border-color: rgba(15, 23, 42, 0.12) !important;
 }
 
 @keyframes pulse-node {

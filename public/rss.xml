@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>Pluto AI</title>
+    <link>https://pluto0203.github.io/pluto_personal_blog</link>
+    <description>Một dev blog cá nhân về LLMs, prompt engineering, RAG, tooling và mini-project AI.</description>
+    <language>vi-VN</language>
+    <lastBuildDate>Thu, 09 Apr 2026 07:44:11 GMT</lastBuildDate>
+    
+    <item>
+      <title>Understanding Attention Mechanisms in Transformers</title>
+      <link>https://pluto0203.github.io/pluto_personal_blog/post/attention-mechanisms-transformers/</link>
+      <guid>https://pluto0203.github.io/pluto_personal_blog/post/attention-mechanisms-transformers/</guid>
+      <pubDate>Sun, 05 Apr 2026 00:00:00 GMT</pubDate>
+      <category>LLMs</category>
+      <description>A deep dive into the intuition and the math that makes self-attention work so well in modern language models.</description>
+    </item>
+    <item>
+      <title>Prompt Engineering Patterns for Production Systems</title>
+      <link>https://pluto0203.github.io/pluto_personal_blog/post/prompt-engineering-production/</link>
+      <guid>https://pluto0203.github.io/pluto_personal_blog/post/prompt-engineering-production/</guid>
+      <pubDate>Thu, 02 Apr 2026 00:00:00 GMT</pubDate>
+      <category>Prompting</category>
+      <description>Các pattern prompt gọn, ổn định và dễ maintain khi bạn cần đưa LLM vào flow của sản phẩm thật.</description>
+    </item>
+    <item>
+      <title>From a RAG note to a mini demo in one weekend</title>
+      <link>https://pluto0203.github.io/pluto_personal_blog/post/from-rag-note-to-mini-demo/</link>
+      <guid>https://pluto0203.github.io/pluto_personal_blog/post/from-rag-note-to-mini-demo/</guid>
+      <pubDate>Sat, 28 Mar 2026 00:00:00 GMT</pubDate>
+      <category>Tools</category>
+      <description>Một cách tiếp cận gọn để biến ghi chú về RAG thành demo nhỏ nhưng trình bày được và học được nhiều thứ thật.</description>
+    </item>
+    <item>
+      <title>Roadmap AI Engineer 2026: what to learn to build real products</title>
+      <link>https://pluto0203.github.io/pluto_personal_blog/post/ai-engineer-roadmap-2026/</link>
+      <guid>https://pluto0203.github.io/pluto_personal_blog/post/ai-engineer-roadmap-2026/</guid>
+      <pubDate>Sun, 22 Mar 2026 00:00:00 GMT</pubDate>
+      <category>AI</category>
+      <description>Một roadmap súc tích cho người muốn đi từ học AI sang build được feature thật có thể demo và deploy.</description>
+    </item>
+    <item>
+      <title>Ship a personal blog with GitHub Actions and no server</title>
+      <link>https://pluto0203.github.io/pluto_personal_blog/post/ship-blog-with-github-actions/</link>
+      <guid>https://pluto0203.github.io/pluto_personal_blog/post/ship-blog-with-github-actions/</guid>
+      <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
+      <category>CI/CD</category>
+      <description>Cách thiết lập pipeline build và deploy cho website cá nhân để mỗi lần push là site tự cập nhật.</description>
+    </item>
+    <item>
+      <title>Evaluating LLM apps without fooling yourself</title>
+      <link>https://pluto0203.github.io/pluto_personal_blog/post/evaluate-llm-apps/</link>
+      <guid>https://pluto0203.github.io/pluto_personal_blog/post/evaluate-llm-apps/</guid>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 GMT</pubDate>
+      <category>Research</category>
+      <description>Một checklist gọn để đánh giá ứng dụng LLM theo cách bớt cảm tính và hữu ích hơn cho quyết định sản phẩm.</description>
+    </item>
+  </channel>
+</rss>

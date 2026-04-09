@@ -1,3 +1,9 @@
+export const author = {
+  name: "Duy Nguyen Vo Thanh",
+  initials: "D",
+  role: "AI Engineer · AI Agent",
+};
+
 export type Post = {
   slug: string;
   title: string;

@@ -18,8 +18,14 @@ const SHOOTING_STARS = [
 export function SpaceBackground() {
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(0,245,255,0.12),_transparent_0,_transparent_32%),radial-gradient(circle_at_80%_20%,_rgba(88,28,135,0.18),_transparent_0,_transparent_26%),linear-gradient(180deg,_#020817_0%,_#06101f_45%,_#030712_100%)]" />
-      <div className="absolute inset-0 opacity-40" style={{ backgroundImage: "linear-gradient(rgba(34,211,238,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,0.05) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+      <div className="space-backdrop absolute inset-0" />
+      <div
+        className="space-grid absolute inset-0 opacity-40"
+        style={{
+          backgroundImage: "linear-gradient(rgba(34,211,238,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,0.05) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
 
       <div className="absolute inset-0">
         {STARS.map((star, index) => (

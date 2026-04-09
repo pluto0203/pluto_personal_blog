@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev -p 3001",
+    "rss": "node scripts/generate-rss.mjs",
+    "build": "node scripts/generate-rss.mjs && next build",
     "start": "npx serve@latest out",
     "preview": "npx serve@latest out",
     "lint": "eslint . --max-warnings=0 --ignore-pattern .next --ignore-pattern out",

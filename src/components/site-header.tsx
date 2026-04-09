@@ -3,9 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu, Search, SunMoon, X } from "lucide-react";
+import { ChevronDown, Menu, Search, X } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { FacebookIcon, GitHubIcon, XIcon } from "@/components/social-icons";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { slugifyTaxonomy } from "@/lib/blog-shared";
 import { NAV_LINKS, SOCIAL_LINKS } from "@/lib/site-content";
 
@@ -84,10 +85,15 @@ export function SiteHeader({ categories }: SiteHeaderProps) {
           </div>
         </nav>
 
-        <div className="flex items-center gap-4 text-[#a0a0a0]">
-          <button className="transition-colors hover:text-[#00f5ff]" aria-label="Search">
-            <Search className="h-5 w-5" />
-          </button>
+        <div className="flex items-center gap-3 text-[#a0a0a0]">
+          <Link
+            href="/blog#search"
+            className="hidden items-center gap-2 rounded-full border border-[#222222] bg-[#111111]/90 px-3 py-1.5 text-xs font-medium transition-colors hover:border-[#00f5ff]/40 hover:text-[#00f5ff] sm:flex"
+            aria-label="Search articles"
+          >
+            <Search className="h-4 w-4" />
+            <span className="hidden lg:inline">Search</span>
+          </Link>
           <a href={githubLink} target="_blank" rel="noreferrer" className="hidden transition-colors hover:text-[#00f5ff] sm:block" aria-label="GitHub">
             <GitHubIcon className="h-5 w-5" />
           </a>
@@ -97,9 +103,7 @@ export function SiteHeader({ categories }: SiteHeaderProps) {
           <a href={xLink} target="_blank" rel="noreferrer" className="hidden transition-colors hover:text-[#00f5ff] sm:block" aria-label="Twitter">
             <XIcon className="h-5 w-5" />
           </a>
-          <button className="transition-colors hover:text-[#00f5ff]" aria-label="Toggle theme">
-            <SunMoon className="h-5 w-5" />
-          </button>
+          <ThemeToggle />
           <button className="transition-colors hover:text-[#00f5ff] md:hidden" onClick={() => setMobileOpen((value) => !value)} aria-label="Toggle menu" type="button">
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>

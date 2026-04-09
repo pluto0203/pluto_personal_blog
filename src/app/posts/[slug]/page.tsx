@@ -3,11 +3,12 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import remarkGfm from "remark-gfm";
+import { CommentsSection } from "@/components/comments-section";
 import { mdxComponents } from "@/components/mdx-components";
 import { PostCard } from "@/components/post-card";
 import { ReadingProgress } from "@/components/reading-progress";
 import { ShareActions } from "@/components/share-actions";
-import { author, getAllPosts, getPostBySlug } from "@/lib/blog-data";
+import { author, getAllPosts, getPostBySlug, siteConfig } from "@/lib/blog-data";
 import { getPostHeadings } from "@/lib/content";
 
 type PageProps = {
@@ -29,6 +30,33 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: post.title,
     description: post.description,
+    keywords: [...post.tags, post.category, "AI", "LLMs"],
+    authors: [{ name: author.name, url: siteConfig.github }],
+    alternates: {
+      canonical: `/post/${post.slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url: `/post/${post.slug}`,
+      type: "article",
+      publishedTime: post.date,
+      siteName: siteConfig.name,
+      images: [
+        {
+          url: "/PlutoAI.jpg",
+          width: 1200,
+          height: 630,
+          alt: `Preview image for ${post.title}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: ["/PlutoAI.jpg"],
+    },
   };
 }
 
@@ -41,6 +69,7 @@ export default async function PostDetailPage({ params }: PageProps) {
   }
 
   const tocItems = getPostHeadings(post.content);
+  const showToc = tocItems.length >= 3;
   const relatedPosts = getAllPosts().filter((item) => item.slug !== post.slug).slice(0, 3);
 
   return (
@@ -64,11 +93,11 @@ export default async function PostDetailPage({ params }: PageProps) {
           {post.category}
         </span>
 
-        <h1 className="animate-fade-in-up mb-5 text-3xl font-black leading-tight tracking-tight sm:text-4xl md:text-5xl">
+        <h1 className="animate-fade-in-up mb-5 text-3xl font-black leading-[1.12] tracking-tight sm:text-4xl md:text-5xl">
           {post.title}
         </h1>
 
-        <p className="mb-8 max-w-3xl text-lg leading-relaxed text-[#a0a0a0]">{post.description}</p>
+        <p className="mb-8 max-w-3xl text-lg leading-8 text-[#b7c2ce] sm:text-[1.2rem]">{post.description}</p>
 
         <div className="flex flex-col justify-between gap-4 border-b border-t border-[#222222] py-4 sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
@@ -77,8 +106,9 @@ export default async function PostDetailPage({ params }: PageProps) {
             </div>
             <div>
               <div className="text-sm font-bold">{author.name}</div>
-              <div className="flex items-center gap-3 text-xs">
+              <div className="flex flex-wrap items-center gap-2 text-xs sm:text-[13px]">
                 <span className="text-[#a0a0a0]">{post.dateLabel}</span>
+                <span className="text-[#4a4a4a]">•</span>
                 <span className="font-[family-name:var(--font-jetbrains-mono)] text-[#00f5ff]">{post.readTime}</span>
               </div>
             </div>
@@ -92,6 +122,8 @@ export default async function PostDetailPage({ params }: PageProps) {
         <div
           className="relative h-48 w-full overflow-hidden rounded-sm border border-white/[0.05] bg-[#111111] sm:h-72 md:h-80"
           style={{ backgroundImage: "radial-gradient(circle at 50% 50%, rgba(0,245,255,0.08) 0%, transparent 70%)" }}
+          role="img"
+          aria-label={`Abstract cover illustration for ${post.title}`}
         >
           <svg className="absolute inset-0 h-full w-full opacity-25" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -109,31 +141,48 @@ export default async function PostDetailPage({ params }: PageProps) {
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-7xl flex-col gap-10 pb-24 lg:flex-row">
-        <aside className="hidden w-48 shrink-0 lg:block">
-          <div className="sticky top-24">
-            <h4 className="mb-4 border-b border-[#222222] pb-2 font-[family-name:var(--font-jetbrains-mono)] text-xs uppercase tracking-widest text-[#00f5ff]">
-              Contents
-            </h4>
-            <ul className="space-y-3 text-sm">
-              {tocItems.map((item) => (
-                <li key={item.id}>
-                  <a
-                    href={`#${item.id}`}
-                    className={`block border-l-2 border-transparent py-0.5 text-[13px] text-[#606060] transition-all hover:border-[#333] hover:text-[#a0a0a0] ${
-                      item.level === 3 ? "pl-6" : "pl-3"
-                    }`}
-                  >
-                    {item.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </aside>
+      <div className="mx-auto flex max-w-7xl flex-col gap-10 pb-24 lg:flex-row lg:items-start">
+        {showToc ? (
+          <aside className="hidden w-56 shrink-0 lg:block">
+            <div className="sticky top-24 rounded-xl border border-white/[0.06] bg-[#0d1522]/80 p-4 backdrop-blur">
+              <h4 className="mb-4 border-b border-[#222222] pb-2 font-[family-name:var(--font-jetbrains-mono)] text-xs uppercase tracking-widest text-[#00f5ff]">
+                Mục lục
+              </h4>
+              <ul className="space-y-2.5 text-sm">
+                {tocItems.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      className={`block rounded-r-sm border-l-2 border-transparent px-3 py-1 text-[13px] leading-5 text-[#9098a6] transition-all hover:border-[#00f5ff]/40 hover:bg-white/[0.03] hover:text-[#eefaff] ${
+                        item.level === 3 ? "ml-3" : ""
+                      }`}
+                    >
+                      {item.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        ) : null}
 
-        <article className="max-w-[720px] min-w-0 flex-1">
-          <p className="mb-8 text-lg leading-relaxed text-[#b0b0b0]">{post.excerpt}</p>
+        <article className="min-w-0 max-w-[760px] flex-1">
+          <p className="mb-8 text-[1.05rem] leading-8 text-[#c4ced8] sm:text-[1.12rem]">{post.excerpt}</p>
+
+          {showToc ? (
+            <aside className="mb-8 rounded-xl border border-white/[0.06] bg-[#0d1522]/80 p-4 lg:hidden">
+              <h4 className="mb-3 font-[family-name:var(--font-jetbrains-mono)] text-xs uppercase tracking-widest text-[#00f5ff]">Mục lục</h4>
+              <ul className="space-y-2 text-sm text-[#cdd6e0]">
+                {tocItems.map((item) => (
+                  <li key={item.id} className={item.level === 3 ? "pl-3" : ""}>
+                    <a href={`#${item.id}`} className="transition-colors hover:text-[#00f5ff]">
+                      {item.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          ) : null}
 
           <div className="min-w-0">
             <MDXRemote
@@ -146,9 +195,13 @@ export default async function PostDetailPage({ params }: PageProps) {
               }}
             />
           </div>
+
+          <div className="mt-12 border-t border-[#222222] pt-8">
+            <CommentsSection />
+          </div>
         </article>
 
-        <aside className="hidden w-48 shrink-0 xl:block">
+        <aside className="hidden w-56 shrink-0 xl:block">
           <div className="sticky top-24 space-y-8">
             <div>
               <h4 className="mb-5 border-b border-[#222222] pb-2 text-xs font-bold uppercase tracking-widest text-[#f0f0f0]">Related</h4>
@@ -156,12 +209,15 @@ export default async function PostDetailPage({ params }: PageProps) {
                 {relatedPosts.map((related) => (
                   <Link key={related.slug} href={`/post/${related.slug}`}>
                     <div className="group cursor-pointer">
-                      <h5 className="mb-1.5 line-clamp-2 text-xs font-bold leading-snug text-[#d0d0d0] transition-colors group-hover:text-[#00f5ff]">
+                      <h5 className="mb-1.5 line-clamp-2 text-sm font-bold leading-snug text-[#d0d0d0] transition-colors group-hover:text-[#00f5ff]">
                         {related.title}
                       </h5>
-                      <div className="flex items-center gap-2 font-[family-name:var(--font-jetbrains-mono)] text-[10px]">
+                      <div className="flex flex-wrap items-center gap-2 font-[family-name:var(--font-jetbrains-mono)] text-[10px]">
                         <span className="text-[#39ff14]">{related.category}</span>
-                        <span className="text-[#606060]">{related.readTime}</span>
+                        <span className="text-[#4a4a4a]">•</span>
+                        <span className="text-[#606060]">{related.dateLabel}</span>
+                        <span className="text-[#4a4a4a]">•</span>
+                        <span className="text-[#00f5ff]">{related.readTime}</span>
                       </div>
                     </div>
                   </Link>

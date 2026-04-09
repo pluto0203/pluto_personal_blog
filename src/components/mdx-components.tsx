@@ -23,7 +23,7 @@ export const mdxComponents = {
   h2: ({ children }: { children: ReactNode }) => {
     const id = slugifyTaxonomy(extractText(children));
     return (
-      <h2 id={id} className="mb-5 mt-12 scroll-mt-24 border-l-4 border-[#00f5ff] pl-4 text-2xl font-black text-white">
+      <h2 id={id} className="mb-6 mt-14 scroll-mt-24 border-l-4 border-[#00f5ff] pl-4 text-2xl font-black leading-tight text-white sm:text-3xl">
         {children}
       </h2>
     );
@@ -31,37 +31,43 @@ export const mdxComponents = {
   h3: ({ children }: { children: ReactNode }) => {
     const id = slugifyTaxonomy(extractText(children));
     return (
-      <h3 id={id} className="mb-4 mt-10 scroll-mt-24 text-xl font-black text-white">
+      <h3 id={id} className="mb-4 mt-10 scroll-mt-24 text-xl font-black leading-snug text-white sm:text-[1.65rem]">
         {children}
       </h3>
     );
   },
-  p: ({ children }: { children: ReactNode }) => <p className="mb-5 leading-relaxed text-[#d0d0d0]">{children}</p>,
-  ul: ({ children }: { children: ReactNode }) => <ul className="mb-5 list-disc space-y-2 pl-6 text-[#d0d0d0]">{children}</ul>,
-  ol: ({ children }: { children: ReactNode }) => <ol className="mb-5 list-decimal space-y-2 pl-6 text-[#d0d0d0]">{children}</ol>,
-  li: ({ children }: { children: ReactNode }) => <li className="leading-relaxed">{children}</li>,
+  p: ({ children }: { children: ReactNode }) => <p className="mb-6 text-[1.05rem] leading-8 text-[#d8dee9] sm:text-[1.1rem]">{children}</p>,
+  ul: ({ children }: { children: ReactNode }) => <ul className="mb-6 list-disc space-y-3 pl-6 text-[1.03rem] leading-8 text-[#d8dee9] sm:text-[1.08rem]">{children}</ul>,
+  ol: ({ children }: { children: ReactNode }) => <ol className="mb-6 list-decimal space-y-3 pl-6 text-[1.03rem] leading-8 text-[#d8dee9] sm:text-[1.08rem]">{children}</ol>,
+  li: ({ children }: { children: ReactNode }) => <li className="pl-1 leading-8">{children}</li>,
   blockquote: ({ children }: { children: ReactNode }) => (
-    <blockquote className="my-8 rounded-r-sm border-l-4 border-[#c026d3] bg-[#111111] p-5 italic text-[#a0a0a0]">
+    <blockquote className="my-10 rounded-r-lg border-l-4 border-[#c026d3] bg-[#111111] px-5 py-4 text-[1.02rem] leading-8 text-[#c6ced8] shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]">
       {children}
     </blockquote>
   ),
   a: ({ href = "", children }: { href?: string; children: ReactNode }) => {
     if (href.startsWith("/")) {
       return (
-        <Link href={href} className="text-[#00f5ff] underline-offset-4 hover:underline">
+        <Link href={href} className="text-[#00f5ff] underline-offset-4 transition-colors hover:text-white hover:underline">
           {children}
         </Link>
       );
     }
 
     return (
-      <a href={href} target="_blank" rel="noreferrer" className="text-[#00f5ff] underline-offset-4 hover:underline">
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        className="text-[#00f5ff] underline-offset-4 transition-colors hover:text-white hover:underline"
+      >
         {children}
       </a>
     );
   },
+  strong: ({ children }: { children: ReactNode }) => <strong className="font-semibold text-white">{children}</strong>,
   code: ({ children }: { children: ReactNode }) => (
-    <code className="rounded bg-[#111111] px-1.5 py-0.5 font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#39ff14]">
+    <code className="rounded-md bg-[#111111] px-1.5 py-0.5 font-[family-name:var(--font-jetbrains-mono)] text-[0.95em] text-[#39ff14]">
       {children}
     </code>
   ),
@@ -73,6 +79,6 @@ export const mdxComponents = {
       return <CodeBlock code={code} language={language} />;
     }
 
-    return <pre className="mb-5 overflow-x-auto">{children}</pre>;
+    return <pre className="mb-8 overflow-x-auto">{children}</pre>;
   },
 };

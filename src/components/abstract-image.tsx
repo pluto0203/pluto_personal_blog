@@ -1,6 +1,7 @@
 interface AbstractImageProps {
   seed: number;
   className?: string;
+  alt?: string;
 }
 
 const gradients = [
@@ -14,13 +15,16 @@ const gradients = [
 
 const strokeColors = ["#00f5ff", "#39ff14", "#c026d3", "#00f5ff", "#39ff14", "#c026d3"];
 
-export function AbstractImage({ seed, className = "" }: AbstractImageProps) {
+export function AbstractImage({ seed, className = "", alt }: AbstractImageProps) {
   const idx = seed % gradients.length;
 
   return (
     <div
       className={`relative h-48 w-full overflow-hidden border-b border-white/[0.05] bg-[#0a0a0a] ${className}`}
       style={{ backgroundImage: gradients[idx] }}
+      role={alt ? "img" : undefined}
+      aria-label={alt}
+      aria-hidden={alt ? undefined : true}
     >
       <svg className="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
         <defs>
