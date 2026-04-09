@@ -68,11 +68,11 @@ export default function RootLayout({
   const categories = getAllCategories();
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var key='pluto-theme';var stored=localStorage.getItem(key);var prefersLight=window.matchMedia('(prefers-color-scheme: light)').matches;document.documentElement.dataset.theme=stored||(prefersLight?'light':'dark');}catch(e){document.documentElement.dataset.theme='dark';}})();`,
+            __html: `(function(){try{var key='pluto-theme';var stored=localStorage.getItem(key);document.documentElement.dataset.theme=stored==='light'?'light':'dark';}catch(e){document.documentElement.dataset.theme='dark';}})();`,
           }}
         />
       </head>
