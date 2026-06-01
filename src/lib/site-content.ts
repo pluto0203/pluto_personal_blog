@@ -16,6 +16,7 @@ export type SocialLink = {
 export const NAV_LINKS: SiteLink[] = [
   { label: "Home", href: "/" },
   { label: "Blog", href: "/blog" },
+  { label: "Demo", href: "/demo" },
   { label: "Series", href: "/series" },
   { label: "About", href: "/about" },
 ];
@@ -24,6 +25,7 @@ export const FOOTER_LINKS: SiteLink[] = [
   { label: "About the Author", href: "/about" },
   { label: "Series & Reading Paths", href: "/series" },
   { label: "Latest Blog Posts", href: "/blog" },
+  { label: "Demo Hub", href: "/demo" },
   { label: "RSS Feed", href: "/rss.xml", external: true },
   { label: "GitHub Discussions", href: "https://github.com/pluto0203/pluto_personal_blog/discussions", external: true },
   { label: "GitHub Repository", href: "https://github.com/pluto0203/pluto_personal_blog", external: true },

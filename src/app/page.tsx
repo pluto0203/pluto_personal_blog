@@ -40,7 +40,7 @@ export default function Home() {
         <div className="relative z-10 mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
           <div>
             <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#00f5ff]/25 bg-[#00f5ff]/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#00f5ff]">
-              Pluto AI • dev log for builders
+              Pluto AI • Build in Public
             </span>
             <h1 className="animate-fade-in-up mb-5 text-[clamp(2.8rem,7vw,5.5rem)] font-black leading-[1.02] tracking-tight text-white">
                  AI Tập Sự
@@ -194,9 +194,14 @@ export default function Home() {
               <p className="mb-2 font-[family-name:var(--font-jetbrains-mono)] text-xs uppercase tracking-[0.24em] text-[#39ff14]">Projects / Demos</p>
               <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Mini-projects đang được build song song với blog</h2>
             </div>
-            <a href={siteConfig.github} target="_blank" rel="noreferrer" className="text-sm font-medium text-[#00f5ff] underline-offset-4 hover:underline">
-              Xem GitHub profile
-            </a>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link href="/demo" className="text-sm font-medium text-[#39ff14] underline-offset-4 hover:underline">
+                Mở Demo hub
+              </Link>
+              <a href={siteConfig.github} target="_blank" rel="noreferrer" className="text-sm font-medium text-[#00f5ff] underline-offset-4 hover:underline">
+                Xem GitHub profile
+              </a>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
