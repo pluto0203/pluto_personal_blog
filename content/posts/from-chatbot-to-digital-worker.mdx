@@ -1,0 +1,197 @@
+---
+title: "Hiểu nghiệp vụ Agent: Từ Chatbot đến Digital Worker"
+description: "Hiểu nghiệp vụ Agent: Từ Chatbot đến Digital Worker"
+excerpt: "Scope nhỏ, evaluation thủ công, UX rõ ràng,  đó là công thức tốt hơn hẳn việc lao vào một pipeline quá lớn ngay từ đầu."
+date: "2026-06-01"
+tags:
+  - "Agent"
+  - "Business"
+category: "Agent"
+seed: 2
+featured: true
+seriesSlug: "agent-business"
+---
+
+## Tại sao chatbot CSKH của bạn vẫn đang thất bại?
+
+Hãy thử tưởng tượng tình huống này.
+
+Công ty bạn vừa deploy một chatbot CSKH cho sàn e-commerce. Stack xịn: GPT-4o, RAG với toàn bộ FAQ, fine-tuned trên hàng nghìn ticket cũ. Chatbot trả lời mượt mà, lịch sự, đúng ngữ pháp hoàn hảo.
+
+Rồi khách hàng nhắn: *"Tôi vừa nhận được cái lò vi sóng 3 triệu rưỡi, mở hộp ra thì mặt kính bị vỡ. Tôi là khách VIP 3 năm nay, tôi muốn hoàn tiền ngay hôm nay, không phải chờ 5–7 ngày."*
+
+Chatbot trả lời: *"Cảm ơn bạn đã phản hồi! Rất tiếc khi sản phẩm không đáp ứng được kỳ vọng. Để xử lý yêu cầu hoàn trả, bạn vui lòng gửi hình ảnh sản phẩm lỗi và chờ bộ phận kiểm duyệt xem xét trong 5–7 ngày làm việc."*
+
+Khách hàng không trả lời nữa. Hai tiếng sau, xuất hiện một review 1 sao trên Google Maps kèm ảnh chụp màn hình cuộc trò chuyện.
+
+Ticket leo lên human agent senior. Cô ấy mất 8 phút đọc lại toàn bộ, rồi xử lý trong 4 phút: xác nhận lỗi qua ảnh khách tự gửi trước đó trong app, approve hoàn tiền 100% ngay lập tức theo policy VIP, gửi lời xin lỗi cá nhân hoá kèm voucher 500K cho lần mua tiếp theo, và flag case để team QC kiểm tra lô hàng đó.
+
+LLM bạn dùng hoàn toàn đủ khả năng hiểu tình huống này. Vậy tại sao chatbot thất bại?
+
+Câu trả lời không nằm ở model. Nó nằm ở nghiệp vụ, hay đúng hơn là sự vắng mặt hoàn toàn của nghiệp vụ trong hệ thống bạn đã build.
+
+---
+
+## 4 cấp độ Agent: Bạn đang ở đâu?
+
+Trước khi nói về giải pháp, cần có một mental model chung để định vị hệ thống. Mình thấy cách phân loại thực tế nhất là theo khả năng xử lý nghiệp vụ, không phải theo kiến trúc kỹ thuật.
+
+### Level 1 - Responder
+
+Agent chỉ biết trả lời. Không có tool, không có context về state của hệ thống, không có khả năng thực thi bất kỳ action nào. Toàn bộ "intelligence" nằm ở prompt và knowledge base.
+
+Với khách VIP complaint lò vi sóng vỡ kính, Responder trả lời dựa trên FAQ hoàn trả: "Vui lòng gửi hình ảnh và chờ 5–7 ngày." Nó không biết khách này đã mua 23 đơn hàng trong 3 năm. Không biết policy VIP cho phép hoàn tiền ngay. Không biết đây là sản phẩm cao giá cần xử lý ưu tiên.
+
+**Ceiling:** Phù hợp cho FAQ bot, không phù hợp cho bất kỳ nghiệp vụ nào có trạng thái.
+
+### Level 2 - Resolver
+
+Agent có tools để truy vấn thông tin, nhưng chỉ đọc, không ghi. Nó có thể tra cứu lịch sử mua hàng, xem tier khách hàng, kiểm tra policy hoàn trả theo từng loại sản phẩm, nhưng sau đó chỉ inform, không action.
+
+Với case này, Resolver tra được: khách là VIP Gold, đơn hàng còn trong warranty, sản phẩm thuộc danh mục được hoàn tiền nhanh. Nó thông báo cho khách đủ điều kiện hoàn tiền và... dừng ở đó. Không thể tự approve. Không thể gửi voucher. Không thể flag cho QC.
+
+**Ceiling:** Tốt hơn đáng kể so với Responder trong việc cung cấp thông tin chính xác, nhưng vẫn đặt gánh nặng action lên human.
+
+### Level 3 - Orchestrator
+
+Agent có thể thực thi actions và điều phối nhiều bước. Nó không chỉ đọc state mà còn thay đổi state: approve refund, trigger workflow, gửi notification, cập nhật CRM.
+
+Với case này, Orchestrator làm được: (1) verify ảnh lỗi khách đã upload trong app, (2) check eligibility theo policy VIP, (3) approve hoàn tiền 100% và trigger payment gateway, (4) gửi confirmation kèm timeline hoàn tiền, (5) log case vào CRM với tag "product_defect". Tất cả trong một conversation turn.
+
+**Ceiling:** Xử lý tốt các nghiệp vụ đã được define rõ. Gặp khó khăn với edge cases phức tạp hoặc tình huống cần human judgment.
+
+### Level 4 - Digital Worker
+
+Agent có thể tự xử lý end-to-end một domain nghiệp vụ, kể cả các tình huống chưa được script sẵn. Nó biết khi nào nên tự quyết, khi nào cần escalate, và escalate cho ai.
+
+Với case này, Digital Worker không chỉ dừng ở hoàn tiền. Nó nhận ra đây là khách VIP Gold với LTV cao, tự tính toán rằng một voucher 500K retention cost ít hơn rất nhiều so với churn risk, execute toàn bộ flow hoàn tiền, gửi lời xin lỗi cá nhân hoá (không phải template), đồng thời tự động flag lô hàng lò vi sóng đó cho team QC vì đây là complaint thứ 2 về cùng SKU trong tuần này, một pattern mà chatbot Cấp 1, 2, 3 không bao giờ nhận ra.
+
+**Ceiling:** Đây là nơi hầu hết team đang cố đến nhưng chưa tới, vì nó đòi hỏi nghiệp vụ được thiết kế và xây dựng đúng cách.
+
+---
+
+## Anatomy của một Agent nghiệp vụ
+
+Khi nhìn vào các hệ thống Agent thất bại, có thể thấy một pattern lặp đi lặp lại: nhiều team thường build một LLM wrapper và gọi nó là Agent. Perception và Response generation thì xịn. Nhưng 3 thành phần giữa, thứ thực sự làm cho nó là *Agent*, thì bị skip hoàn toàn.
+
+Một Agent nghiệp vụ thực sự có 5 lớp:
+
+**Lớp 1 - Perception:** Không chỉ là "hiểu text đầu vào". Perception tốt bao gồm nhận diện intent (khách muốn gì), entity extraction (sản phẩm nào, loại lỗi gì, yêu cầu timeline ra sao), và quan trọng không kém, **context loading**: lấy về toàn bộ thông tin liên quan trước khi làm bất kỳ gì tiếp theo. Tier khách hàng, lịch sử mua hàng, ảnh sản phẩm lỗi đã upload, policy hoàn trả theo từng danh mục sản phẩm.
+
+**Lớp 2 - Intent Resolution:** LLM giỏi hiểu câu hỏi bề mặt. Nhưng intent resolution thực sự là map câu hỏi đó vào *business intent*. "Sản phẩm tôi bị lỗi, tôi muốn hoàn tiền" có thể có 4 business intent khác nhau: (a) muốn hoàn tiền và kết thúc, (b) muốn đổi sản phẩm mới nhưng dùng ngôn từ "hoàn tiền" vì không biết có option đó, (c) đang tức giận và cần được lắng nghe trước khi bàn về solution, (d) đây là khách VIP sắp churn và cần được xử lý ở cấp độ khác hoàn toàn. Cùng một câu hỏi, 4 response pathway khác nhau.
+
+**Lớp 3 - Business Rule Check:** Đây là lớp bị bỏ qua nhiều nhất, và là lý do chính khiến Agent làm sai. Trước khi thực thi bất kỳ action nào, Agent phải check: action này có được phép không? Với điều kiện nào? Ai có quyền approve? Bài 2 của series này sẽ đi sâu vào lớp này.
+
+**Lớp 4 - Action Execution:** Thực thi action và quan trọng là xử lý *kết quả của action đó*, success, partial success, failure, và side effects. Approve hoàn tiền thành công nhưng payment gateway báo timeout? Voucher đã gửi nhưng email bị bounce? Agent cần biết xử lý tiếp như thế nào thay vì im lặng và để khách chờ đợi không rõ lý do.
+
+**Lớp 5 - Response Generation:** Lớp này thường là phần duy nhất người ta build. LLM compose một response dựa trên kết quả của các lớp trên. Nếu 4 lớp kia được làm tốt, lớp này thực ra khá đơn giản.
+
+---
+
+## Tool design là nghiệp vụ, không phải kỹ thuật
+
+Đây là điểm mình muốn nhấn mạnh nhất trong bài này, vì nó là root cause của rất nhiều Agent thất bại.
+
+Hầu hết engineers, khi thiết kế tools cho Agent, nghĩ theo kiểu API wrapper: *"Mình có endpoint nào thì mình wrap lại thành tool."* Kết quả là một bộ tools như thế này:
+
+```
+get_order(order_id)
+update_order(order_id, data)
+get_customer(customer_id)
+send_email(to, subject, body)
+create_refund(order_id, amount)
+```
+
+Nhìn qua thì ổn. Nhưng đây là những gì Agent *không biết* khi dùng bộ tools này:
+
+- `update_order` có thể update những field nào? Có field nào chỉ admin mới update được không?
+- `create_refund` có giới hạn amount không? Cần approval nếu vượt threshold không?
+- `send_email` sẽ gửi từ địa chỉ nào? Có template nào không? Agent có thể viết nội dung tùy ý không?
+- Nếu `get_order` trả về order không tồn tại, đó là lỗi hay valid state?
+
+Khi Agent không biết những điều này, một trong hai việc xảy ra: (a) nó đoán và đôi khi đoán sai nghiêm trọng, hoặc (b) nó hỏi lại user những thứ user không nên cần biết.
+
+**Tool thiết kế tốt cho Agent** sẽ chứa business semantics trong tool definition:
+
+- **Permission scope rõ ràng:** Tool này làm được gì, không làm được gì, với điều kiện gì.
+- **Error semantics có nghĩa:** Không phải chỉ `400 Bad Request` mà là `REFUND_EXCEEDS_POLICY_LIMIT` hay `ORDER_NOT_ELIGIBLE_FOR_UPGRADE`.
+- **Side-effect awareness:** Tool này trigger gì khác ngoài action chính? `upgrade_shipping` sẽ deduct inventory slot, notify warehouse, và charge customer, Agent cần biết điều đó.
+- **Business context built-in:** Thay vì `create_refund(amount)`, hãy là `request_refund(order_id, reason, customer_tier)`, và để tool tự tính toán eligible amount dựa trên policy.
+
+Sự khác biệt này nghe có vẻ nhỏ nhưng ảnh hưởng rất lớn đến mức độ hiệu quả của Agent khi được triển khai trong production.
+
+---
+
+## 3 Anti-pattern phổ biến nhất
+
+Có 3 anti-pattern xuất hiện hầu hết ở các dự án thất bại.
+
+### Anti-pattern 1: God-Agent
+
+Một Agent làm tất cả mọi thứ. Xử lý order. Trả lời câu hỏi sản phẩm. Giải quyết khiếu nại. Làm upsell. Escalate tickets.
+
+Vấn đề không phải về kỹ thuật, về lý thuyết LLM đủ khả năng. Vấn đề là về **nghiệp vụ**: mỗi domain có context riêng, permission riêng, và failure mode riêng. Khi gộp tất cả vào một Agent, bạn không thể kiểm soát được behavior ở từng domain. Và khi Agent làm sai, việc debug sẽ tốn rất nhiều thời gian.
+
+**Dấu hiệu nhận biết:** Prompt system dài hơn 2000 tokens. Tool list hơn 15 items. Không có sự phân chia rõ ràng của từng loại request.
+
+### Anti-pattern 2: Tool Overload
+
+Liên quan đến God-Agent nhưng đặc thù hơn. Team cố gắng giải quyết mọi vấn đề bằng cách thêm tool. Agent không biết check shipping cost? Thêm `get_shipping_cost`. Agent không handle được coupon? Thêm `validate_coupon`. Cứ thế, sau 3 tháng có 40+ tools.
+
+Nghịch lý là Agent có quá nhiều tools thường perform *tệ hơn* Agent có ít tools được thiết kế tốt. LLM phải dành quá nhiều "attention" để chọn đúng tool, và tỷ lệ chọn sai tăng lên theo số lượng tools.
+
+**Rule of thumb:** Một Agent nên có không quá 10–12 tools. Nếu cần nhiều hơn, đó là dấu hiệu bạn cần tách thành nhiều specialized agents.
+
+### Anti-pattern 3: Missing Business Context
+
+Agent được build trong môi trường lab, không có business context thực tế. Nó không biết:
+
+- Khách VIP Gold được approve hoàn tiền ngay, không cần chờ review 5–7 ngày như policy standard.
+- Sản phẩm điện tử trên 2 triệu thuộc danh mục "high-value", cần xử lý ưu tiên và có SLA riêng.
+- Đây là complaint thứ 2 về cùng SKU lò vi sóng trong tuần, dấu hiệu lỗi lô hàng cần flag QC.
+- Khách đã upload ảnh lỗi trong app từ trước khi chat, Agent không biết nên lại yêu cầu gửi lại.
+
+Business context này không phải lúc nào cũng có trong database. Nhiều thứ nằm trong chính sách của công ty, tier-specific SLA, hay thậm chí là "kiến thức ngầm" của team CSKH senior.
+
+**Giải pháp thực tế:** Phải có sự tham gia của human agent senior giúp build nghiệp vụ thực tế. Ghi lại toàn bộ thông tin họ tra cứu, quyết định họ đưa ra, và lý do đằng sau. Đó chính là danh sách business context mà Agent của bạn cần có.
+
+---
+
+## Agent Readiness Checklist
+
+Trước khi bắt đầu build một Agent mới, hoặc trước khi blame LLM khi Agent hiện tại không hoạt động, hãy chạy qua checklist này:
+
+**Về Data & Context**
+- Agent có access đến real-time data mà nó cần không? (order status, inventory, customer tier)
+- Context loading có đủ nhanh để không làm ảnh hưởng UX không? 
+- Agent có biết về temporal context không? (giờ làm việc, ngày lễ, campaigns đang chạy, ...)
+
+**Về Business Rules**
+- Business rules đã được document rõ ràng chưa, hay chỉ nằm trong đầu team CSKH?
+- Agent có biết khi nào *không* nên tự quyết định và cần escalate không?
+- Permission boundary của Agent được định nghĩa rõ chưa? (Agent được phép làm gì, không được phép làm gì)
+
+**Về Tools**
+- Mỗi tool có semantics rõ ràng không? 
+- Tool có encode side effects không? (action này trigger gì khác)
+- Số lượng tools có nhiều không? Nếu có, cần split thành nhiều agents không?
+
+**Về Failure Handling**
+- Fallback khi LLM không confident là gì?
+- Escalation path đến human agent được define rõ chưa?
+- Có cách nào để user biết mình đang nói chuyện với AI và có thể chuyển sang human không?
+
+Nếu bạn check không qua được 3 câu bất kỳ trong list này, đó là vấn đề nghiệp vụ, không phải vấn đề model hay infrastructure.
+
+---
+
+## Tổng kết
+
+Bài này không nói quá nhiều về kỹ thuật.
+
+Lý do hầu hết các Agent e-commerce thất bại không phải vì thiếu kỹ thuật. LangGraph đủ mạnh, LLM đủ thông minh. Vấn đề là **nghiệp vụ chưa được translate thành thứ Agent có thể hiểu và thực thi**.
+
+4 cấp độ Agent cho bạn một framework để định vị mình đang ở đâu và cần đi đến đâu. Anatomy 5 lớp cho bạn biết mình đang thiếu lớp nào. Anti-patterns giúp bạn tránh những cái bẫy phổ biến nhất.
+
+---
+

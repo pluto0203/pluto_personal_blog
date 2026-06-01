@@ -48,6 +48,14 @@ export const series: Series[] = [
     level: "Beginner → Intermediate",
     postSlugs: ["attention-mechanisms-transformers", "from-rag-note-to-mini-demo", "evaluate-llm-apps"],
   },
+  {
+    slug: "agent-business",
+    title: "Nghiệp vụ cho AI Agent",
+    description: "Series bài viết giúp bạn hiểu hơn về cách xây dựng nghiệp vụ cho Agent.",
+    cadence: "Bi-weekly",
+    level: "Beginner → Intermediate",
+    postSlugs: ["from-chatbot-to-digital-worker"],
+  },
 ];
 
 export function getAllPosts() {
