@@ -166,7 +166,7 @@ export default async function PostDetailPage({ params }: PageProps) {
           </aside>
         ) : null}
 
-        <article className="min-w-0 max-w-[760px] flex-1">
+        <article className="min-w-0 max-w-[760px] flex-1" data-pagefind-body>
           <p className="mb-8 text-[1.05rem] leading-8 text-[#c4ced8] sm:text-[1.12rem]">{post.excerpt}</p>
 
           {showToc ? (

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, Search, X } from "lucide-react";
 import { Logo } from "@/components/logo";
+import { SearchDialog } from "@/components/search-dialog";
 import { FacebookIcon, GitHubIcon, XIcon, LinkedInIcon } from "@/components/social-icons";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { slugifyTaxonomy } from "@/lib/blog-shared";
@@ -26,6 +27,18 @@ export function SiteHeader({ categories }: SiteHeaderProps) {
   const pathname = usePathname();
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
   const githubLink = SOCIAL_LINKS.find((link) => link.platform === "github")?.href ?? "https://github.com";
   const facebookLink = SOCIAL_LINKS.find((link) => link.platform === "facebook")?.href ?? "https://facebook.com";
   const linkedInLink = SOCIAL_LINKS.find((link) => link.platform === "linkedin")?.href ?? "https://linkedin.com";
@@ -87,14 +100,15 @@ export function SiteHeader({ categories }: SiteHeaderProps) {
         </nav>
 
         <div className="flex items-center gap-3 text-[#a0a0a0]">
-          <Link
-            href="/blog#search"
+          <button
+            type="button"
+            onClick={() => setSearchOpen(true)}
             className="hidden items-center gap-2 rounded-full border border-[#222222] bg-[#111111]/90 px-3 py-1.5 text-xs font-medium transition-colors hover:border-[#00f5ff]/40 hover:text-[#00f5ff] sm:flex"
-            aria-label="Search articles"
+            aria-label="Search articles (⌘K)"
           >
             <Search className="h-4 w-4" />
-            <span className="hidden lg:inline">Search</span>
-          </Link>
+            <span className="hidden lg:inline">⌘K</span>
+          </button>
           <a href={githubLink} target="_blank" rel="noreferrer" className="hidden transition-colors hover:text-[#00f5ff] sm:block" aria-label="GitHub">
             <GitHubIcon className="h-5 w-5" />
           </a>
@@ -151,6 +165,7 @@ export function SiteHeader({ categories }: SiteHeaderProps) {
           </div>
         </div>
       ) : null}
+      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }
