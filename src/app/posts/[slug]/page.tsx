@@ -73,8 +73,20 @@ export default async function PostDetailPage({ params }: PageProps) {
   const showToc = tocItems.length >= 3;
   const relatedPosts = getRelatedPosts(post, 3);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.description,
+    author: { "@type": "Person", name: author.name, url: siteConfig.github },
+    datePublished: post.date,
+    image: `${siteConfig.url}/og/${post.slug}.png`,
+    publisher: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ReadingProgress />
 
       <header className="mx-auto max-w-4xl px-0 pb-10 pt-6 sm:px-0">
