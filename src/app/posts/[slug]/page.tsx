@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: siteConfig.name,
       images: [
         {
-          url: "/PlutoAI.jpg",
+          url: `${siteConfig.url}/og/${post.slug}.png`,
           width: 1200,
           height: 630,
           alt: `Preview image for ${post.title}`,
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: "summary_large_image",
       title: post.title,
       description: post.description,
-      images: ["/PlutoAI.jpg"],
+      images: [`${siteConfig.url}/og/${post.slug}.png`],
     },
   };
 }
