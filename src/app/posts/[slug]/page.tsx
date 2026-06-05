@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import remarkGfm from "remark-gfm";
 import { CommentsSection } from "@/components/comments-section";
+import { TableOfContents } from "@/components/table-of-contents";
 import { mdxComponents } from "@/components/mdx-components";
 import { PostCard } from "@/components/post-card";
 import { ReadingProgress } from "@/components/reading-progress";
@@ -148,20 +149,7 @@ export default async function PostDetailPage({ params }: PageProps) {
               <h4 className="mb-4 border-b border-[#222222] pb-2 font-[family-name:var(--font-jetbrains-mono)] text-xs uppercase tracking-widest text-[#00f5ff]">
                 Mục lục
               </h4>
-              <ul className="space-y-2.5 text-sm">
-                {tocItems.map((item) => (
-                  <li key={item.id}>
-                    <a
-                      href={`#${item.id}`}
-                      className={`block rounded-r-sm border-l-2 border-transparent px-3 py-1 text-[13px] leading-5 text-[#9098a6] transition-all hover:border-[#00f5ff]/40 hover:bg-white/[0.03] hover:text-[#eefaff] ${
-                        item.level === 3 ? "ml-3" : ""
-                      }`}
-                    >
-                      {item.text}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <TableOfContents items={tocItems} />
             </div>
           </aside>
         ) : null}
