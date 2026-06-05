@@ -2,7 +2,7 @@ import Link from "next/link";
 import HeroFeaturedPanel from "@/components/hero-featured-panel";
 import { PostCard } from "@/components/post-card";
 import { getAllCategories, getAllPosts, getFeaturedPosts, siteConfig, slugifyTaxonomy } from "@/lib/blog-data";
-import { CATEGORY_GUIDE, FEATURED_PAPERS, HERO_PILLS, PROJECT_SHOWCASE, TRENDING_TOPICS } from "@/lib/site-content";
+import { CATEGORY_GUIDE, HERO_PILLS, PROJECT_SHOWCASE } from "@/lib/site-content";
 
 export default function Home() {
   const allPosts = getAllPosts();
@@ -19,7 +19,7 @@ export default function Home() {
     <div className="text-[#f0f0f0]">
       <section className="relative overflow-hidden border-b border-[#222222] pb-20 pt-14 sm:pb-24 sm:pt-20">
         <div className="pointer-events-none absolute inset-0">
-          <svg className="h-full w-full opacity-[0.035]" xmlns="http://www.w3.org/2000/svg">
+          <svg className="h-full w-full opacity-[0.015]" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
                 <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#00f5ff" strokeWidth="1" />
@@ -128,23 +128,6 @@ export default function Home() {
         </div>
 
         <aside className="space-y-10 lg:w-1/4">
-          <div>
-            <h3 className="mb-5 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#f0f0f0]">
-              <span className="h-2 w-2 shrink-0 bg-[#c026d3]" />
-              Trending This Week
-            </h3>
-            <ul className="space-y-4">
-              {TRENDING_TOPICS.map((title, index) => (
-                <li key={title} className="group flex cursor-pointer gap-4">
-                  <span className="mt-[-2px] shrink-0 font-[family-name:var(--font-jetbrains-mono)] text-base font-bold text-[#00f5ff]">
-                    0{index + 1}
-                  </span>
-                  <span className="text-sm leading-snug text-[#a0a0a0] transition-colors group-hover:text-white">{title}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           <div className="relative overflow-hidden rounded-sm border border-[#222222] bg-[#111111] p-5">
             <div className="absolute left-0 top-0 h-[2px] w-full bg-gradient-to-r from-[#00f5ff] to-[#c026d3]" />
             <h3 className="mb-1 text-sm font-bold text-white">Tìm bài nhanh hơn</h3>
@@ -163,24 +146,6 @@ export default function Home() {
                     {tag}
                   </span>
                 </Link>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="mb-4 border-b border-[#222222] pb-2 text-xs font-bold uppercase tracking-widest text-[#f0f0f0]">Featured Papers</h3>
-            <div className="space-y-5">
-              {FEATURED_PAPERS.map((paper) => (
-                <div key={paper.title} className="group">
-                  <h4 className="mb-1 text-sm font-medium leading-snug text-[#f0f0f0] transition-colors group-hover:text-[#00f5ff]">{paper.title}</h4>
-                  <div className="flex items-center gap-3 font-[family-name:var(--font-jetbrains-mono)] text-[10px] text-[#606060]">
-                    <a href={`https://arxiv.org/abs/${paper.arxiv}`} target="_blank" rel="noreferrer" className="text-[#39ff14] hover:underline">
-                      arXiv:{paper.arxiv}
-                    </a>
-                    <span>·</span>
-                    <span>{paper.date}</span>
-                  </div>
-                </div>
               ))}
             </div>
           </div>
