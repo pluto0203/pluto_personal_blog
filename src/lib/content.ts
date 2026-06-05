@@ -119,6 +119,21 @@ export function getAllCategories() {
   return Array.from(new Set(getAllPosts().map((post) => post.category))).sort();
 }
 
+export function getRelatedPosts(post: Post, limit = 3): Post[] {
+  const candidates = getAllPosts().filter((p) => p.slug !== post.slug);
+
+  const scored = candidates.map((p) => {
+    let score = 0;
+    if (post.seriesSlug && p.seriesSlug === post.seriesSlug) score += 3;
+    if (p.category === post.category) score += 2;
+    score += p.tags.filter((t) => post.tags.includes(t)).length;
+    return { post: p, score };
+  });
+
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, limit).map(({ post: p }) => p);
+}
+
 export function getPostHeadings(content: string): TocHeading[] {
   return content
     .split("\n")

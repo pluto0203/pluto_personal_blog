@@ -7,7 +7,9 @@ import {
   getPostBySlug as getContentPostBySlug,
   getPostsByCategorySlug as getContentPostsByCategorySlug,
   getPostsBySeries as getContentPostsBySeries,
+  getRelatedPosts as getContentRelatedPosts,
 } from "@/lib/content";
+import type { Post } from "@/lib/blog-shared";
 
 export type { Post } from "@/lib/blog-shared";
 export { author, slugifyTaxonomy } from "@/lib/blog-shared";
@@ -92,4 +94,8 @@ export function getAllTags() {
 
 export function getAllCategories() {
   return getContentCategories();
+}
+
+export function getRelatedPosts(post: Post, limit = 3) {
+  return getContentRelatedPosts(post, limit);
 }

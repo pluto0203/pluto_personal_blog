@@ -8,7 +8,7 @@ import { mdxComponents } from "@/components/mdx-components";
 import { PostCard } from "@/components/post-card";
 import { ReadingProgress } from "@/components/reading-progress";
 import { ShareActions } from "@/components/share-actions";
-import { author, getAllPosts, getPostBySlug, siteConfig } from "@/lib/blog-data";
+import { author, getAllPosts, getPostBySlug, getRelatedPosts, siteConfig } from "@/lib/blog-data";
 import { getPostHeadings } from "@/lib/content";
 
 type PageProps = {
@@ -70,7 +70,7 @@ export default async function PostDetailPage({ params }: PageProps) {
 
   const tocItems = getPostHeadings(post.content);
   const showToc = tocItems.length >= 3;
-  const relatedPosts = getAllPosts().filter((item) => item.slug !== post.slug).slice(0, 3);
+  const relatedPosts = getRelatedPosts(post, 3);
 
   return (
     <>
