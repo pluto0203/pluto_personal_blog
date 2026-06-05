@@ -5,7 +5,7 @@ import { author, type Post } from "@/lib/blog-shared";
 export function PostCard({ post }: { post: Post }) {
   return (
     <Link href={`/post/${post.slug}`}>
-      <article className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-sm border border-white/[0.08] bg-[#111111] transition-all duration-300 hover:scale-[1.02] hover:border-[#00f5ff]/30 hover:shadow-[0_0_30px_rgba(0,245,255,0.12)]">
+      <article className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-sm border border-white/[0.08] bg-[#111111] transition-all duration-300 hover:-translate-y-1 hover:border-[#00f5ff]/25 hover:shadow-[0_8px_24px_rgba(0,245,255,0.08)]">
         <AbstractImage seed={post.seed} alt={`Illustration for ${post.title}`} />
         <div className="flex flex-grow flex-col p-6">
           <div className="mb-3 flex flex-wrap items-center gap-2 font-[family-name:var(--font-jetbrains-mono)] text-[11px]">
